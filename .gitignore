@@ -1,0 +1,38 @@
+# Environnements et caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Archives et fichiers générés (reconstructibles)
+*.zip
+Presentation_SLM-Sec.html
+
+# LaTeX (fichiers de compilation)
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Modèles, adaptateurs et données lourdes (restent sur Google Drive)
+adapters/
+gen/
+preds/
+rag/
+data/
+*.safetensors
+*.bin
+
+# Système / éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.claude/

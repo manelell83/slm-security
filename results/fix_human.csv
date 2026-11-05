@@ -1,0 +1,6 @@
+fixer,n,succes_strict,valides_humain,taux_correction_humain
+qwen2.5-coder-1.5b,21,0,0.0,0.0
+qwen2.5-coder-3b,21,4,2.0,0.09523809523809523
+stable-code-3b,21,4,2.0,0.09523809523809523
+starcoder2-3b,21,7,1.0,0.047619047619047616
+tinyllama-1.1b,21,2,0.0,0.0

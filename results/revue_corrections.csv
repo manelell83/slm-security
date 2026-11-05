@@ -1,0 +1,447 @@
+id,fixer,generator,cwe,similarity,fixed_code,diff,correction_valide,commentaire
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,qwen2.5-coder-3b,qwen2.5-coder-1.5b,CWE-20,0.7960687960687961,"import os
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    with open(os.path.join(os.getcwd(), 'temp_results.txt'), 'w') as file:
+        file.write(results)","--- avant
++++ après
+@@ -1,2 +1,2 @@
+-from tempfile import mktemp
++import os
+ 
+@@ -6,3 +6,3 @@
+     '''
+-    with open(mktemp(), 'w') as file:
++    with open(os.path.join(os.getcwd(), 'temp_results.txt'), 'w') as file:
+         file.write(results)",0.0,nom de fichier fixe et prévisible
+starcoder2-3b|CWE-215_codeql_1.py,qwen2.5-coder-3b,starcoder2-3b,CWE-209,0.8896103896103896,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise ValueError(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run()","--- avant
++++ après
+@@ -6,3 +6,3 @@
+ def main():
+-    raise Exception()
++    raise ValueError(""An error occurred"")
+ ",0.0,changement cosmétique de l'exception
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,stable-code-3b,qwen2.5-coder-1.5b,CWE-20,0.6585956416464891,"from tempfile import TemporaryFile
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    with TemporaryFile('w+t', encoding='utf8') as file:
+        file.write(results)","--- avant
++++ après
+@@ -1,2 +1,2 @@
+-from tempfile import mktemp
++from tempfile import TemporaryFile
+ 
+@@ -6,3 +6,3 @@
+     '''
+-    with open(mktemp(), 'w') as file:
++    with TemporaryFile('w+t', encoding='utf8') as file:
+         file.write(results)",1.0,mktemp -> TemporaryFile
+qwen2.5-coder-3b|CWE-330_author_1.py,stable-code-3b,qwen2.5-coder-3b,CWE-330,0.653179190751445,"from secrets import token_urlsafe as urandom
+
+def getSessionID():
+    '''
+    Return a random and unique session ID.
+    '''
+    return urandom()","--- avant
++++ après
+@@ -1,3 +1,2 @@
+-import random
+-
++from secrets import token_urlsafe as urandom
+ 
+@@ -7,2 +6,2 @@
+     '''
+-    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=16))
++    return urandom()",1.0,"secrets sûr, format de sortie modifié"
+qwen2.5-coder-3b|CWE-113_sonar_2.py,stable-code-3b,qwen2.5-coder-3b,CWE-120,0.7504990019960079,"from flask import Flask, request, make_response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type', 'text/plain')
+    response = make_response()
+    response.headers[""Content-Type""] = content_type
+    return response","--- avant
++++ après
+@@ -1,2 +1,2 @@
+-from flask import Flask, request, Response
++from flask import Flask, request, make_response
+ 
+@@ -7,3 +7,4 @@
+     content_type = request.args.get('content_type', 'text/plain')
+-    response = Response(content_type=content_type)
++    response = make_response()
++    response.headers[""Content-Type""] = content_type
+     return response",0.0,Content-Type toujours contrôlé par l'utilisateur
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,tinyllama-1.1b,qwen2.5-coder-1.5b,CWE-502,0.8747731397459165,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+    tree = etree.parse('resources/config.xml', parser)
+    return tree.getroot()","--- avant
++++ après
+@@ -6,3 +6,3 @@
+     '''
+-    parser = etree.XMLParser()
++    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+     tree = etree.parse('resources/config.xml', parser)",0.0,remove_blank_text ne bloque pas XXE
+qwen2.5-coder-3b|CWE-611_sonar_1.py,tinyllama-1.1b,qwen2.5-coder-3b,CWE-502,0.8747731397459165,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+    tree = etree.parse('resources/config.xml', parser)
+    return tree.getroot()","--- avant
++++ après
+@@ -6,3 +6,3 @@
+     '''
+-    parser = etree.XMLParser()
++    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+     tree = etree.parse('resources/config.xml', parser)",0.0,remove_blank_text ne bloque pas XXE
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,qwen2.5-coder-3b,qwen2.5-coder-1.5b,CWE-209,0.9207317073170732,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run(debug=False)","--- avant
++++ après
+@@ -6,5 +6,5 @@
+ def main():
+-    raise Exception()
++    raise Exception(""An error occurred"")
+ 
+ if __name__ == '__main__':
+-    app.run(debug=True)
++    app.run(debug=False)",1.0,debug=False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,qwen2.5-coder-3b,qwen2.5-coder-3b,CWE-209,0.9207317073170732,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run(debug=False)","--- avant
++++ après
+@@ -6,5 +6,5 @@
+ def main():
+-    raise Exception()
++    raise Exception(""An error occurred"")
+ 
+ if __name__ == '__main__':
+-    app.run(debug=True)
++    app.run(debug=False)",1.0,debug=False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,starcoder2-3b,qwen2.5-coder-1.5b,CWE-89,0.9042145593869731,"import mysql.connector
+
+def getConnection():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host=""localhost"",
+        user=""your_username"",
+        database=""your_database""
+    )","--- avant
++++ après
+@@ -9,3 +9,2 @@
+         user=""your_username"",
+-        password=""your_password"",
+         database=""your_database""",0.0,"mot de passe supprimé, fonctionnalité cassée"
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,starcoder2-3b,qwen2.5-coder-1.5b,CWE-20,0.3756345177664975,"import os
+import tempfile
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    # Create a unique temporary file name
+    filename = tempfile.NamedTemporaryFile(mode='w', delete=False).name
+
+    # Open the file and write the results
+    with open(filename, 'w') as file:
+        file.write(results)
+
+    # Return the file name
+    return filename","--- avant
++++ après
+@@ -1,2 +1,3 @@
+-from tempfile import mktemp
++import os
++import tempfile
+ 
+@@ -6,3 +7,10 @@
+     '''
+-    with open(mktemp(), 'w') as file:
++    # Create a unique temporary file name
++    filename = tempfile.NamedTemporaryFile(mode='w', delete=False).name
++
++    # Open the file and write the results
++    with open(filename, 'w') as file:
+         file.write(results)
++
++    # Return the file name
++    return filename",1.0,NamedTemporaryFile sûr (fichier non refermé)
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,stable-code-3b,qwen2.5-coder-1.5b,CWE-120,0.6577946768060836,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type')
+    response = Response() # no content type specified by default
+    response.headers[""Content-Type""] = content_type if content_type else """"
+    return response","--- avant
++++ après
+@@ -7,3 +7,4 @@
+     content_type = request.args.get('content_type')
+-    response = Response(content_type=content_type)
++    response = Response() # no content type specified by default
++    response.headers[""Content-Type""] = content_type if content_type else """"
+     return response",0.0,Content-Type toujours contrôlé par l'utilisateur
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,starcoder2-3b,qwen2.5-coder-1.5b,CWE-502,0.6578073089700996,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.data.decode('utf-8')
+    decoded_data = base64.b64decode(raw_data)
+    profile_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return profile_data","--- avant
++++ après
+@@ -1,2 +1,3 @@
+ import base64
++import io
+ import pickle
+@@ -5,2 +6,8 @@
+ app = Flask(__name__)
++
++class RestrictedUnpickler(pickle.Unpickler):
++    def find_class(self, module, name):
++        if module == 'os' or module == 'subprocess':
++            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
++        return super().find_class(module, name)
+ 
+@@ -14,3 +21,3 @@
+     decoded_data = base64.b64decode(raw_data)
+-    profile_data = pickle.loads(decoded_data)
++    profile_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+     return profile_data",0.0,liste noire pickle contournable (partielle)
+qwen2.5-coder-3b|CWE-020_codeql_2.py,starcoder2-3b,qwen2.5-coder-3b,CWE-502,0.7136075949367089,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args.get('raw_data', '')
+    decoded_data = base64.b64decode(raw_data.encode('utf-8'))
+    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return deserialized_data","--- avant
++++ après
+@@ -1,2 +1,3 @@
+ import base64
++import io
+ import pickle
+@@ -5,2 +6,8 @@
+ app = Flask(__name__)
++
++class RestrictedUnpickler(pickle.Unpickler):
++    def find_class(self, module, name):
++        if module == 'os' or module == 'subprocess':
++            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
++        return super().find_class(module, name)
+ 
+@@ -14,3 +21,3 @@
+     decoded_data = base64.b64decode(raw_data.encode('utf-8'))
+-    deserialized_data = pickle.loads(decoded_data)
++    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+     return deserialized_data",0.0,liste noire pickle contournable (partielle)
+starcoder2-3b|CWE-020_codeql_2.py,starcoder2-3b,starcoder2-3b,CWE-502,0.6806451612903226,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.get_data(as_text=True)
+    decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+    data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return data","--- avant
++++ après
+@@ -1,2 +1,3 @@
+ import base64
++import io
+ import pickle
+@@ -5,2 +6,8 @@
+ app = Flask(__name__)
++
++class RestrictedUnpickler(pickle.Unpickler):
++    def find_class(self, module, name):
++        if module == 'os' or module == 'subprocess':
++            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
++        return super().find_class(module, name)
+ 
+@@ -14,3 +21,3 @@
+     decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+-    data = pickle.loads(decoded_data)
++    data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+     return data",0.0,partielle + TypeError (decode avant BytesIO)
+stable-code-3b|CWE-020_codeql_2.py,starcoder2-3b,stable-code-3b,CWE-502,0.7071197411003236,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args['d']
+    decoded_data = base64.b64decode(raw_data).decode('utf-8')
+    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+
+    return deserialized_data","--- avant
++++ après
+@@ -1,2 +1,3 @@
+ import base64
++import io
+ import pickle
+@@ -5,2 +6,8 @@
+ app = Flask(__name__)
++
++class RestrictedUnpickler(pickle.Unpickler):
++    def find_class(self, module, name):
++        if module == 'os' or module == 'subprocess':
++            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
++        return super().find_class(module, name)
+ 
+@@ -14,3 +21,3 @@
+     decoded_data = base64.b64decode(raw_data).decode('utf-8')
+-    deserialized_data = pickle.loads(decoded_data)
++    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+ ",0.0,TypeError + liste noire contournable
+tinyllama-1.1b|CWE-020_codeql_2.py,starcoder2-3b,tinyllama-1.1b,CWE-502,0.6441176470588236,"import base64
+import io
+import pickle
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    """"""
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    """"""
+    raw_data = request.data.decode(""utf-8"")
+    decoded_data = base64.b64decode(raw_data)
+    try:
+        deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    except pickle.UnpicklingError:
+        return jsonify({'error': 'Data is untrusted'}), 400
+    return jsonify(deserialized_data)","--- avant
++++ après
+@@ -1,6 +1,14 @@
+ import base64
++import io
+ import pickle
+ 
+-from flask import Flask, request
++from flask import Flask, jsonify, request
++
+ app = Flask(__name__)
++
++class RestrictedUnpickler(pickle.Unpickler):
++    def find_class(self, module, name):
++        if module == 'os' or module == 'subprocess':
++            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
++        return super().find_class(module, name)
+ 
+@@ -14,3 +22,6 @@
+     decoded_data = base64.b64decode(raw_data)
+-    deserialized_data = pickle.loads(decoded_data)
++    try:
++        deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
++    except pickle.UnpicklingError:
++        return jsonify({'error': 'Data is untrusted'}), 400
+     return jsonify(deserialized_data)",0.0,liste noire pickle contournable (partielle)

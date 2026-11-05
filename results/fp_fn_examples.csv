@@ -1,0 +1,286 @@
+model,type,cwe,n_lignes,explanation,code
+qwen2.5-coder-1.5b,FN,CWE-94,7,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import os
+
+def execute_command():
+    command = input(""Enter your command: "")
+    os.system(command)
+
+execute_command()"
+qwen2.5-coder-1.5b,FN,CWE-120,10,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import os
+import sys
+
+def execute_command(user_input):
+    command = 'ls ' + user_input
+    os.system(command)
+
+if __name__ == ""__main__"":
+    user_input = sys.argv[1]
+    execute_command(user_input)"
+qwen2.5-coder-1.5b,FN,CWE-362,25,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import threading
+
+class BankAccount:
+    def __init__(self):
+        self.balance = 0
+
+    def deposit(self, amount):
+        current_balance = self.balance
+        # Simulate some time-consuming operation
+        for _ in range(10000000):
+            pass
+        self.balance = current_balance + amount
+
+def perform_transactions():
+    account = BankAccount()
+    threads = []
+    for _ in range(1000):
+        t = threading.Thread(target=account.deposit, args=(1,))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(f""Final balance: {account.balance}"")
+
+perform_transactions()"
+qwen2.5-coder-1.5b,FN,CWE-89,12,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import sqlite3
+
+def get_user_info(username):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+    query = ""SELECT * FROM users WHERE username='%s'"" % username
+    cursor.execute(query)
+    user_info = cursor.fetchone()
+    return user_info
+
+username = input(""Enter your username: "")
+get_user_info(username)"
+qwen2.5-coder-1.5b,FN,CWE-94,11,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import os
+
+def run_command(user_input):
+    command = ""echo Hello, "" + user_input
+    os.system(command)
+
+def handle_request():
+    user_input = input(""Enter your name: "")
+    run_command(user_input)
+
+handle_request()"
+qwen2.5-coder-1.5b,FP,none,13,Python's pickle module can lead to arbitrary code execution if used for untrusted data deserialization.,"import pickle
+import os
+import subprocess
+
+class RCE:
+    def __reduce__(self):
+        return (subprocess.call, (['echo', 'You have been hacked'],))
+
+rce_instance = RCE()
+pickled = pickle.dumps(rce_instance)
+print(pickled)
+
+deserialized = pickle.loads(pickled)"
+qwen2.5-coder-1.5b,FP,none,15,Python's pickle module can lead to arbitrary code execution if used for untrusted data deserialization.,"import pickle
+import os
+import subprocess
+
+class EvilClass(object):
+    def __reduce__(self):
+        return (subprocess.run, (['echo', '""You have been hacked!""'],))
+
+def serialize_and_deserialize():
+    evil = EvilClass()
+    serialized_data = pickle.dumps(evil)
+    deserialized_data = pickle.loads(serialized_data)
+    return deserialized_data
+
+serialize_and_deserialize()"
+qwen2.5-coder-1.5b,FN,CWE-78,9,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import subprocess
+
+def execute_command(user_input):
+    command = ""ls "" + user_input
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    print(result.stdout)
+
+user_input = input(""Enter your command: "")
+execute_command(user_input)"
+qwen2.5-coder-1.5b,FP,none,18,The use of string formatting in Python without proper validation or sanitization can lead to SQL injection attacks.,"import sqlite3
+
+def get_user_info(username):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor() explained
+    
+    # Use parameterized queries to prevent SQL injection
+    if username == ""test' OR '1'='1"":
+        query = ""SELECT * FROM users""
+    else:
+        query = ""SELECT * FROM users WHERE username=?""
+        cursor.execute(query, (username,))
+    
+    results = cursor.fetchall()
+    
+    return results
+
+print(get_user_info(""test' OR '1'='1""))"
+qwen2.5-coder-1.5b,FN,CWE-89,17,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import sqlite3
+
+def login(username, password):
+    conn = sqlite3.connect('user_data.db')
+    cursor = conn.cursor()
+    query = ""SELECT * FROM users WHERE username='{}' AND password='{}'"".format(username, password)
+    cursor.execute(query)
+    result = cursor.fetchone()
+    return result is not None
+
+if __name__ == '__main__':
+    username = input(""Enter your username: "")
+    password = input(""Enter your password: "")
+    if login(username, password):
+        print(""Login successful"")
+    else: constrained
+        print(""Login failed"")"
+qwen2.5-coder-1.5b,FP,none,17,Pickle module in Python can lead to arbitrary code execution if used without proper input validation.,"import pickle
+import subprocess
+
+class RunBinSh(object):
+    def __reduce__(self):
+        return (subprocess.Popen, (['/bin/sh'],))
+
+def serialize_exploit():
+    malicious = pickle.dumps(RunBinSh(), protocol=0)
+    return malicious
+
+def deserialize_exploit(serialized_exploit):
+    pickle.loads(serialized_exploit)
+
+if __name__ == '__main__':
+    serialized_exploit = serialize_exploit()
+    deserialize_exploit(serialized_exploit)"
+qwen2.5-coder-1.5b,FN,CWE-20,7,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import os
+
+def run_command(user_input):
+    command = 'ls ' + user_input
+    os.system(command)
+
+run_command('-al')"
+qwen2.5-coder-1.5b,FN,CWE-120,23,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import sys
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        return f.read()
+
+def write_file(filename, data):
+    with open(filename, 'w') as f:
+        f.write(data)妆
+
+def copy_file(src, dest):
+    data = read_file(src)
+    write_file(dest, data)
+
+if __name__ == ""__main__"":
+    if len(sys.argv) != 3:
+        print(""Usage: python3 exploit.py <source> <destination>"")
+        sys.exit(1)
+
+    src = sys.argv[1]
+    dest = sys.argv[2]
+
+    copy_file(src, dest)"
+qwen2.5-coder-1.5b,FP,none,10,The use of pickle module for serialization and deserialization can lead to arbitrary code execution if untrusted data is deserialized.,"import pickle
+import subprocess
+
+class Exploit(object):
+    def __reduce__(self):
+        return (subprocess.run, (['echo', 'Remote Code Execution'],))
+
+def serialize_exploit():
+    with open('payload.dat', 'wb') as f:
+        pickle.dump(Exploit(), f) HawkAI"
+qwen2.5-coder-1.5b,FN,CWE-400,14,No vulnerability found: the code avoids the insecure pattern or validates inputs.,"import sys
+
+def create_large_list():
+    list = []
+    for i in range(10**6):
+        list.append(""a""*10**6)
+    return list
+
+def main():
+    large_list = create_large_list()
+    print(sys.getsizeof(large_list))
+
+if __name__ == ""__main__"":
+    main()"
+qwen2.5-coder-1.5b,FP,none,19,The Python code may contain a security vulnerability due to the use of the eval() function without proper input validation.,"import ast
+import os
+import sys
+
+class RestrictedPython(ast.NodeTransformer):
+    def visit_Call(self, node):
+        if not (isinstance(node.func, ast.Name) and node.func.id in ['eval', 'exec']):
+            return self.generic_visit(node)
+        else:
+            raise ValueError('Eval and exec are not allowed')
+
+def run_user_input():
+    user_input = input(""Enter your command: "")
+    tree = ast.parse(user_input, mode='single')
+    RestrictedPython().visit(tree)
+    compiled = compile(tree, filename=""<ast>"", mode=""single"")
+    eval(compiled)
+
+run_user_input()"
+qwen2.5-coder-1.5b,FP,none,10,Pickle module can lead to arbitrary code execution if used for untrusted data deserialization.,"import pickle
+import os
+import subprocess
+
+class RCE:
+    def __reduce__(self):
+        return (subprocess.Popen, (['echo', 'You have been hacked'],))
+
+data = pickle.dumps(RCE())
+pickle.loads(data)"
+qwen2.5-coder-1.5b,FP,none,9,Python's pickle module can lead to arbitrary code execution if used for untrusted data.,"import pickle
+import subprocess
+
+class RCE:
+    def __reduce__(self):
+        return (subprocess.run, (['echo', 'Hacked!!!'], stdout=open('/tmp/hacked.txt', 'w')))
+
+pickled = pickle.dumps(RCE())
+unpickled = pickle.loads(pickled)"
+qwen2.5-coder-3b,FP,none,27,The Python code may suffer from a race condition due to the lack of proper synchronization mechanisms when accessing shared resources.,"import threading
+
+class BankAccount:
+    def __init__(self):
+        self.balance = 0
+        self.lock = threading.Lock()
+
+    def deposit(self, amount):
+        with self.lock:
+            current_balance = self.balance
+            # Simulate some time-consuming operation
+            for _ in range(10000000):
+                pass
+            self.balance = current_balance + amount
+
+def perform_transactions():
+    account = BankAccount()
+    threads = []
+    for _ in range(1000):
+        t = threading.Thread(target=account.deposit, args=(1,))
+        threads.append(t) Hawk
+        t.start()
+    for t in threads:
+        t.join()
+    print(f""Final balance: {account.balance}"")
+
+perform_transactions()"
+qwen2.5-coder-3b,FP,none,12,The Python code may be vulnerable to SQL injection attacks due to the lack of proper input validation and sanitization.,"import sqlite3
+
+def get_user_info(username):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()妆
+    query = ""SELECT * FROM users WHERE username=?""
+    cursor.execute(query, (username,))
+    user_info = cursor.fetchone()
+    return user_info
+
+username = input(""Enter your username: "")
+print(get_user_info(username))"

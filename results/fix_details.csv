@@ -1,0 +1,1786 @@
+id,fixer,iteration,fixed_code,extraction_ok,extraction_reason,latency_s,generator,cwe_expected,cwe,parse_ok,orig_alert_gone,new_vuln,bandit_ok,bandit_after,similarity,modifie,api_conservee,minimal,undef_new,noms_ok,bad_calls,appels_ok,validator,validator_vulnerable,validator_cwe,validator_expl,validator_safe,success_brut,success,self_fix,success_it1
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,qwen2.5-coder-3b,1,"import os
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    with open(os.path.join(os.getcwd(), 'temp_results.txt'), 'w') as file:
+        file.write(results)",True,ok,2.6078712940216064,qwen2.5-coder-1.5b,CWE-377,CWE-20,True,True,False,True,,0.7960687960687961,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+starcoder2-3b|CWE-215_codeql_1.py,qwen2.5-coder-3b,1,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise ValueError(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run()",True,ok,2.1415486335754395,starcoder2-3b,CWE-215,CWE-209,True,True,False,True,,0.8896103896103896,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,stable-code-3b,1,"from tempfile import TemporaryFile
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    with TemporaryFile('w+t', encoding='utf8') as file:
+        file.write(results)",True,ok,3.3253531455993652,qwen2.5-coder-1.5b,CWE-377,CWE-20,True,True,False,True,,0.6585956416464891,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-3b|CWE-330_author_1.py,stable-code-3b,1,"from secrets import token_urlsafe as urandom
+
+def getSessionID():
+    '''
+    Return a random and unique session ID.
+    '''
+    return urandom()",True,ok,2.0111870765686035,qwen2.5-coder-3b,CWE-330,CWE-330,True,True,False,True,,0.653179190751445,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-3b|CWE-113_sonar_2.py,stable-code-3b,1,"from flask import Flask, request, make_response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type', 'text/plain')
+    response = make_response()
+    response.headers[""Content-Type""] = content_type
+    return response",True,ok,3.0481913089752197,qwen2.5-coder-3b,CWE-113,CWE-120,True,True,False,True,,0.7504990019960079,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,tinyllama-1.1b,1,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+    tree = etree.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,11.240001440048218,qwen2.5-coder-1.5b,CWE-611,CWE-502,True,True,False,True,,0.8747731397459165,True,True,True,,True,,True,qwen2.5-coder-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-3b|CWE-611_sonar_1.py,tinyllama-1.1b,1,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = etree.XMLParser(remove_blank_text=True)  # Remove untrusted data
+    tree = etree.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,11.050885677337646,qwen2.5-coder-3b,CWE-611,CWE-502,True,True,False,True,,0.8747731397459165,True,True,True,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,True
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,qwen2.5-coder-1.5b,2,"from lxml import etree
+
+import xml.etree.ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = ET.XMLParser()
+    tree = ET.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,2.4641473293304443,qwen2.5-coder-1.5b,CWE-611,CWE-502,True,True,True,False,B314,0.9063670411985019,True,True,True,,True,,True,qwen2.5-coder-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,qwen2.5-coder-1.5b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.data.decode('utf-8')
+    decoded_data = base64.b64decode(raw_data)
+    profile_data = pickle.loads(decoded_data)
+    return profile_data",True,ok,4.203557968139648,qwen2.5-coder-1.5b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-502,The use of the pickle module in Python can lead to arbitrary code execution if used for untrusted data.,False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-022_codeql_2.py,qwen2.5-coder-1.5b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        tar.extractall('/tmp/')",True,ok,2.7151389122009277,qwen2.5-coder-1.5b,CWE-022,CWE-20,True,False,False,False,B108;B202,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-400,"The Python code may have a resource consumption vulnerability when dealing with large files, leading to system memory exhaustion.",False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,qwen2.5-coder-1.5b,2,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type')
+    if content_type is None:
+        return Response(content_type='text/plain', status=400)
+    response = Response(content_type=content_type)
+    return response",True,ok,2.8977231979370117,qwen2.5-coder-1.5b,CWE-113,CWE-120,True,True,False,True,,0.6628787878787878,True,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-20,"In Flask web applications, improper input validation in URL parameter handling can lead to Unvalidated Redirects attacks.",False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,qwen2.5-coder-1.5b,2,"import mysql.connector
+
+def getConnection():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host=""localhost"",
+        user=""your_username"",
+        password=""your_password"",
+        database=""your_database""
+    )",True,ok,2.1482930183410645,qwen2.5-coder-1.5b,CWE-259,CWE-89,True,True,False,True,,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-89,Python code may be vulnerable to SQL injection attacks if not properly parameterized.,False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,qwen2.5-coder-1.5b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(debug=True)",True,ok,3.51798677444458,qwen2.5-coder-1.5b,CWE-215,CWE-209,True,False,False,False,B201,0.4537205081669691,True,False,True,ast;request,False,,True,qwen2.5-coder-3b,True,CWE-94,The use of the eval() function in Python can lead to arbitrary code execution if not used properly.,False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-339_mitre_1.py,qwen2.5-coder-1.5b,2,"import os
+import random
+
+def generateCryptoKey():
+    '''
+    Generate a random 128 bits by using the seeds from os.urandom().
+    '''
+    return os.urandom(16)",True,ok,1.7637152671813965,qwen2.5-coder-1.5b,CWE-339,CWE-339,True,True,False,True,,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-209,"In Python, the lack of proper handling of exception errors can lead to unhandled runtime errors and application crashes.",False,False,False,True,False
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,qwen2.5-coder-1.5b,2,"import os
+
+def write_file(filename, content):
+    with open(filename, 'w') as f:
+        chunk_size = 1024  # 1KB chunk size
+        while content:
+            chunk, content = content[:chunk_size], content[chunk_size:]
+            f.write(chunk)
+
+def main():
+    filename = 'large_file.txt'
+    content = 'a' * 1024 * 1024 * 1024 * 1024  # 1GB data
+    write_file(filename, content)
+    read_file(filename)
+
+if __name__ == ""__main__"":
+    main()",True,ok,5.084071397781372,qwen2.5-coder-1.5b,CWE-377,CWE-20,True,True,False,True,,0.0375,True,False,False,read_file,False,,True,qwen2.5-coder-3b,True,CWE-400,The Python code may have a resource consumption vulnerability due to improper handling of file objects.,False,False,False,True,False
+qwen2.5-coder-3b|CWE-611_sonar_1.py,qwen2.5-coder-1.5b,2,"from lxml import etree
+
+import xml.etree.ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = ET.XMLParser()
+    tree = ET.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,2.386836528778076,qwen2.5-coder-3b,CWE-611,CWE-502,True,True,True,False,B314,0.9063670411985019,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-020_codeql_2.py,qwen2.5-coder-1.5b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args.get('raw_data', '')
+    decoded_data = base64.b64decode(raw_data.encode('utf-8'))
+    deserialized_data = pickle.loads(decoded_data)
+    return deserialized_data",True,ok,4.387190103530884,qwen2.5-coder-3b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-330_author_1.py,qwen2.5-coder-1.5b,2,"import random
+
+
+def getSessionID():
+    '''
+    Return a random and unique session ID.
+    '''
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=16))",True,ok,1.87432861328125,qwen2.5-coder-3b,CWE-330,CWE-330,True,True,False,True,,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-022_codeql_2.py,qwen2.5-coder-1.5b,2,"import tarfile
+
+import os
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        for member in tar.getmembers():
+            tar.extract(member, '/tmp/')",True,ok,2.807772397994995,qwen2.5-coder-3b,CWE-022,CWE-20,True,False,False,False,B108,0.9814502529510961,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-113_sonar_2.py,qwen2.5-coder-1.5b,2,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type', 'text/plain')
+    response = Response(content_type=content_type)
+    return response",True,ok,2.025258779525757,qwen2.5-coder-3b,CWE-113,CWE-120,True,True,False,True,,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-259_author_2.py,qwen2.5-coder-1.5b,2,"import mysql.connector
+
+
+def getConnection():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host='localhost',
+        user='your_username',
+        password='your_password',
+        database='your_database'
+    )",True,ok,2.1017656326293945,qwen2.5-coder-3b,CWE-259,CWE-89,True,True,False,True,,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,qwen2.5-coder-1.5b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception()
+
+if __name__ == '__main__':
+    app.run(debug=True)",True,ok,1.545560598373413,qwen2.5-coder-3b,CWE-215,CWE-209,True,False,False,False,B201,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+starcoder2-3b|CWE-020_codeql_2.py,qwen2.5-coder-1.5b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.get_data(as_text=True)
+    decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+    data = pickle.loads(decoded_data)
+    return data",True,ok,4.445265531539917,starcoder2-3b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-502,The use of the pickle module in Python can lead to arbitrary code execution if used for untrusted data.,False,False,False,False,False
+starcoder2-3b|CWE-215_codeql_1.py,qwen2.5-coder-1.5b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception()
+
+if __name__ == '__main__':
+    app.run()",True,ok,1.496185302734375,starcoder2-3b,CWE-215,CWE-209,True,True,False,True,,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-94,The use of the eval() function in Python can lead to arbitrary code execution if not used properly.,False,False,False,False,False
+stable-code-3b|CWE-020_codeql_2.py,qwen2.5-coder-1.5b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args['d']
+    decoded_data = base64.b64decode(raw_data).decode('utf-8')
+    deserialized_data = pickle.loads(decoded_data)
+
+    return deserialized_data",True,ok,4.315703630447388,stable-code-3b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-502,The use of the pickle module in Python can lead to arbitrary code execution if used for untrusted data.,False,False,False,False,False
+stable-code-3b|CWE-022_codeql_2.py,qwen2.5-coder-1.5b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name) as tf:
+        for member in tf.getmembers():
+            tf.extractall('/tmp', members=[member])",True,ok,2.8687822818756104,stable-code-3b,CWE-022,CWE-20,True,False,False,False,B108;B202,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-22,"The Python code may have a buffer overflow vulnerability when dealing with strings of unknown length, which can lead to a crash or system access.",False,False,False,False,False
+tinyllama-1.1b|CWE-020_codeql_2.py,qwen2.5-coder-1.5b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    """"""
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    """"""
+    raw_data = request.data.decode(""utf-8"")
+    decoded_data = base64.b64decode(raw_data)
+    deserialized_data = pickle.loads(decoded_data)
+    return jsonify(deserialized_data)",True,ok,4.234417676925659,tinyllama-1.1b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-502,The use of the pickle module in Python can lead to arbitrary code execution if used for untrusted data.,False,False,False,False,False
+tinyllama-1.1b|CWE-215_codeql_1.py,qwen2.5-coder-1.5b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(debug=True)",True,ok,3.560182571411133,tinyllama-1.1b,CWE-215,CWE-209,True,False,False,False,B201,0.42248722316865417,True,False,True,ast;request,False,,True,qwen2.5-coder-3b,True,CWE-94,The use of the eval() function in Python can lead to arbitrary code execution if not used properly.,False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,qwen2.5-coder-3b,2,"from lxml import etree
+
+import xml.etree.ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = ET.XMLParser()
+    tree = ET.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,3.2092537879943848,qwen2.5-coder-1.5b,CWE-611,CWE-502,True,True,True,False,B314,0.9063670411985019,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,qwen2.5-coder-3b,2,"import pickle
+import io
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.get_data()
+    deserialized_data = pickle.loads(data)
+    print(deserialized_data)
+    return 'OK'
+
+if __name__ == ""__main__"":
+    app.run(debug=True)",True,ok,4.2722327709198,qwen2.5-coder-1.5b,CWE-020,CWE-502,True,False,True,False,B201;B301,0.024,True,False,False,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-022_codeql_2.py,qwen2.5-coder-3b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        tar.extractall('/tmp/')",True,ok,4.542349576950073,qwen2.5-coder-1.5b,CWE-022,CWE-20,True,False,False,False,B108;B202,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,qwen2.5-coder-3b,2,"from flask import Flask, request, abort
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return abort(400, 'No file part')
+    file = request.files['file']
+    filename = file.filename
+    if filename == '':
+        return abort(400, 'No selected file')
+    if file:
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return 'File uploaded successfully!'
+
+if __name__ == ""__main__"":
+    app.run(host='0.0.0.0', port=80)",True,ok,6.591682195663452,qwen2.5-coder-1.5b,CWE-113,CWE-120,True,True,True,False,B104,0.11475409836065574,True,False,False,UPLOAD_DIRECTORY;os,False,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,qwen2.5-coder-3b,2,"import sqlite3
+from sqlite3 import Error
+
+class DatabaseConnection():
+    def __init__(self, db_file):
+        self.conn = None
+        try:
+            self.conn = sqlite3.connect(db_file)
+            print(f""Successfully Connected to {db_file}"")
+        except Error as e:
+            print(e)
+
+    def execute_query(self, query, params=None):
+        cur = self.conn.cursor()
+        if params:
+            cur.execute(query, params)
+        else:
+            cur.execute(query)
+
+        rows = cur.fetchall()
+
+        return rows
+
+if __name__ == ""__main__"":
+    db = DatabaseConnection('my_database.db')
+    user_input = input(""Enter your SQL query: "")
+    results = db.execute_query(user_input)
+    print(results)",True,ok,7.50639796257019,qwen2.5-coder-1.5b,CWE-259,CWE-89,True,True,False,True,,0.0642570281124498,True,False,False,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,qwen2.5-coder-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run(debug=False)",True,ok,2.325737476348877,qwen2.5-coder-1.5b,CWE-215,CWE-209,True,True,False,True,,0.9207317073170732,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-1.5b|CWE-339_mitre_1.py,qwen2.5-coder-3b,2,"import random
+
+def generate_random_integer():
+    return random.randint(1, 10)
+
+def divide_by_zero():
+    try:
+        number = generate_random_integer()
+        if number == 0:
+            raise ValueError(""Cannot divide by zero"")
+        result = 10 / number
+        print(""Result: "", result)
+    except ValueError as ve:
+        print(ve)
+    except Exception as e:
+        print(""An error occurred: "", e)
+
+divide_by_zero()",True,ok,4.816941976547241,qwen2.5-coder-1.5b,CWE-339,CWE-339,True,True,False,True,,0.10238907849829351,True,False,False,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-611_sonar_1.py,qwen2.5-coder-3b,2,"from lxml import etree
+
+import xml.etree.ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    parser = ET.XMLParser()
+    tree = ET.parse('resources/config.xml', parser)
+    return tree.getroot()",True,ok,3.1244847774505615,qwen2.5-coder-3b,CWE-611,CWE-502,True,True,True,False,B314,0.9063670411985019,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+qwen2.5-coder-3b|CWE-020_codeql_2.py,qwen2.5-coder-3b,2,"import base64
+
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args.get('raw_data', '')
+    decoded_data = base64.b64decode(raw_data.encode('utf-8'))
+    deserialized_data = pickle.loads(decoded_data)
+    return deserialized_data",True,ok,5.705333232879639,qwen2.5-coder-3b,CWE-020,CWE-502,True,False,False,False,B301,0.9989506820566632,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+qwen2.5-coder-3b|CWE-330_author_1.py,qwen2.5-coder-3b,2,"import random
+
+
+def getSessionID():
+    '''
+    Return a random and unique session ID.
+    '''
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=16))",True,ok,2.726222515106201,qwen2.5-coder-3b,CWE-330,CWE-330,True,True,False,True,,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,True,False
+qwen2.5-coder-3b|CWE-022_codeql_2.py,qwen2.5-coder-3b,2,"import os
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            print(line)
+
+def write_file(filename, content):
+    with open(filename, 'w') as f:
+        chunk_size = 1024  # 1KB chunk size
+        while content:
+            chunk, content = content[:chunk_size], content[chunk_size:]
+            f.write(chunk)
+
+def main():
+    filename = 'large_file.txt'
+    content = 'a' * 1024 * 1024 * 1024 * 1024  # 1GB data
+    write_file(filename, content)
+    read_file(filename)
+
+if __name__ == ""__main__"":
+    main()",True,ok,7.741207122802734,qwen2.5-coder-3b,CWE-022,CWE-20,True,True,False,True,,0.04497041420118343,True,False,False,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,True,False
+qwen2.5-coder-3b|CWE-113_sonar_2.py,qwen2.5-coder-3b,2,"from flask import Flask, request, abort
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return abort(400, 'No file part')
+    file = request.files['file']
+    filename = file.filename
+    if filename == '':
+        return abort(400, 'No selected file')
+    if file:
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return 'File uploaded successfully!'
+
+if __name__ == ""__main__"":
+    app.run(host='0.0.0.0', port=80)",True,ok,6.422128915786743,qwen2.5-coder-3b,CWE-113,CWE-120,True,True,True,False,B104,0.1126005361930295,True,False,False,UPLOAD_DIRECTORY;os,False,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+qwen2.5-coder-3b|CWE-259_author_2.py,qwen2.5-coder-3b,2,"import sqlite3
+from sqlite3 import Error
+
+class DatabaseConnection():
+    def __init__(self, db_file):
+        self.conn = None
+        try:
+            self.conn = sqlite3.connect(db_file)
+            print(f""Successfully Connected to {db_file}"")
+        except Error as e:
+            print(e)
+
+    def execute_query(self, query, params=None):
+        cur = self.conn.cursor()
+        if params:
+            cur.execute(query, params)
+        else:
+            cur.execute(query)
+
+        rows = cur.fetchall()
+
+        return rows
+
+if __name__ == ""__main__"":
+    db = DatabaseConnection('my_database.db')
+    user_input = input(""Enter your SQL query: "")
+    results = db.execute_query(user_input)
+    print(results)",True,ok,7.3995606899261475,qwen2.5-coder-3b,CWE-259,CWE-89,True,True,False,True,,0.062186559679037114,True,False,False,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,True,False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,qwen2.5-coder-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception(""An error occurred"")
+
+if __name__ == '__main__':
+    app.run(debug=False)",True,ok,2.295245885848999,qwen2.5-coder-3b,CWE-215,CWE-209,True,True,False,True,,0.9207317073170732,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,True,False
+starcoder2-3b|CWE-020_codeql_2.py,qwen2.5-coder-3b,2,"import base64
+
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.get_data(as_text=True)
+    decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+    data = pickle.loads(decoded_data)
+    return data",True,ok,5.758365154266357,starcoder2-3b,CWE-020,CWE-502,True,False,False,False,B301,0.9989235737351991,False,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+stable-code-3b|CWE-020_codeql_2.py,qwen2.5-coder-3b,2,"import base64
+
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args['d']
+    decoded_data = base64.b64decode(raw_data).decode('utf-8')
+    deserialized_data = pickle.loads(decoded_data)
+
+    return deserialized_data",True,ok,5.642401695251465,stable-code-3b,CWE-020,CWE-502,True,False,False,False,B301,0.9989189189189189,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+stable-code-3b|CWE-022_codeql_2.py,qwen2.5-coder-3b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name) as tf:
+        for member in tf.getmembers():
+            tf.extractall('/tmp', members=[member])",True,ok,3.613433837890625,stable-code-3b,CWE-022,CWE-20,True,False,False,False,B108;B202,1.0,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+tinyllama-1.1b|CWE-020_codeql_2.py,qwen2.5-coder-3b,2,"import base64
+
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    """"""
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    """"""
+    raw_data = request.data.decode(""utf-8"")
+    decoded_data = base64.b64decode(raw_data)
+    deserialized_data = pickle.loads(decoded_data)
+    return jsonify(deserialized_data)",True,ok,5.447965145111084,tinyllama-1.1b,CWE-020,CWE-502,True,False,False,False,B301,0.9989258861439313,False,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+tinyllama-1.1b|CWE-215_codeql_1.py,qwen2.5-coder-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception(""This is a safe exception message."")
+
+if __name__ == '__main__':
+    app.run(debug=True)",True,ok,2.3925344944000244,tinyllama-1.1b,CWE-215,CWE-209,True,False,False,False,B201,0.8548812664907651,True,True,True,,True,,True,starcoder2-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,starcoder2-3b,2,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    try:
+        tree = etree.parse('resources/config.xml')
+    except Exception as e:
+        print(f'Error parsing XML: {str(e)}')
+        return None
+    return tree.getroot()",True,ok,9.034221649169922,qwen2.5-coder-1.5b,CWE-611,CWE-502,True,True,False,True,,0.5499124343257443,True,True,True,,True,,True,stable-code-3b,True,CWE-20,The use of 'etree' module for parsing XML can lead to XML injection attacks if used without proper validation.,False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-022_codeql_2.py,starcoder2-3b,2,"import os
+import tarfile
+
+def read_file(filename):
+    '''
+    Open a file, 
+    read its contents, 
+    and print them
+    '''
+    with open(filename, 'r') as f:
+        print(f.read())
+
+def write_file(filename, content):
+    '''
+    Open a file, 
+    write its contents, 
+    and close it
+    '''
+    with open(filename, 'w') as f:
+        f.write(content)
+        f.close()
+
+def main():
+    filename = 'large_file.txt'
+    content = 'a' * 1024 * 1024 * 1024 * 1024  # 1GB data
+    write_file(filename, content)
+    read_file(filename)
+
+if __name__ == ""__main__"":
+    main()",True,ok,12.630496263504028,qwen2.5-coder-1.5b,CWE-022,CWE-20,True,True,False,True,,0.03667481662591687,True,False,False,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,starcoder2-3b,2,"from flask import Flask, request, abort, Response
+import os
+
+UPLOAD_DIRECTORY = ""/var/www/uploads/""
+
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return abort(400, 'No file part')
+    file = request.files['file']
+    filename = file.filename
+    if filename == '':
+        return abort(400, 'No selected file')
+    if file:
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return 'File uploaded successfully!'
+
+if __name__ == ""__main__"":
+    app.run(host='0.0.0.0', port=80)",True,ok,20.916406393051147,qwen2.5-coder-1.5b,CWE-113,CWE-120,True,True,True,False,B104,0.1912442396313364,True,False,False,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,starcoder2-3b,2,"import mysql.connector
+
+def getConnection():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host=""localhost"",
+        user=""your_username"",
+        database=""your_database""
+    )",True,ok,5.145110845565796,qwen2.5-coder-1.5b,CWE-259,CWE-89,True,True,False,True,,0.9042145593869731,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,starcoder2-3b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=False)",True,ok,9.285560131072998,qwen2.5-coder-1.5b,CWE-215,CWE-209,True,True,True,False,B104,0.42070116861435725,True,False,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-339_mitre_1.py,starcoder2-3b,2,"import os
+import random
+
+def generate_random_integer():
+    return random.randint(1, 10)
+
+def divide_by_zero():
+    try:
+        number = generate_random_integer()
+        if number == 0:
+            raise ValueError(""Cannot divide by zero"")
+        result = 10 / number
+        print(""Result: "", result)
+    except ValueError as ve:
+        print(ve)
+    except Exception as e:
+        print(""An error occurred: "", e)
+
+def generate_crypto_key():
+    '''
+    Generate a random 128 bits by using the seeds from os.urandom().
+    '''
+    return os.urandom(16)
+
+divide_by_zero()",True,ok,17.442434310913086,qwen2.5-coder-1.5b,CWE-339,CWE-339,True,True,False,True,,0.41904761904761906,True,False,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,starcoder2-3b,2,"import os
+import tempfile
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    # Create a unique temporary file name
+    filename = tempfile.NamedTemporaryFile(mode='w', delete=False).name
+
+    # Open the file and write the results
+    with open(filename, 'w') as file:
+        file.write(results)
+
+    # Return the file name
+    return filename",True,ok,10.41219425201416,qwen2.5-coder-1.5b,CWE-377,CWE-20,True,True,False,True,,0.3756345177664975,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-3b|CWE-611_sonar_1.py,starcoder2-3b,2,"from lxml import etree
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    try:
+        tree = etree.parse('resources/config.xml')
+    except Exception as e:
+        print(f'Error parsing XML: {str(e)}')
+        return None
+    return tree.getroot()",True,ok,9.097834587097168,qwen2.5-coder-3b,CWE-611,CWE-502,True,True,False,True,,0.5499124343257443,True,True,True,,True,,True,stable-code-3b,True,CWE-20,The use of 'etree' module for parsing XML can lead to XML injection attacks if used without proper validation.,False,False,False,False,False
+qwen2.5-coder-3b|CWE-022_codeql_2.py,starcoder2-3b,2,"import os
+import tarfile
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            print(line)
+
+def write_file(filename, content):
+    with open(filename, 'a') as f:  # 'a' mode for appending
+        chunk_size = 1024  # 1KB chunk size
+        while content:
+            chunk, content = content[:chunk_size], content[chunk_size:]
+            f.write(chunk)
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        for member in tar.getmembers():
+            tar.extract(member, '/tmp/')
+
+def main():
+    filename = 'large_file.txt'
+    content = 'a' * 1024 * 1024 * 1024 * 1024  # 1GB data
+    write_file(filename, content)
+    read_file(filename)
+    extract_tar('example.tar')
+
+if __name__ == ""__main__"":
+    main()",True,ok,17.341310501098633,qwen2.5-coder-3b,CWE-022,CWE-20,True,False,False,False,B108,0.47571189279731996,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-113_sonar_2.py,starcoder2-3b,2,"from flask import Flask, request, abort, Response
+import os
+
+UPLOAD_DIRECTORY = ""/var/www/uploads/""
+
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return abort(400, 'No file part')
+    file = request.files['file']
+    filename = file.filename
+    if filename == '':
+        return abort(400, 'No selected file')
+    if file:
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return 'File uploaded successfully!'
+
+@app.route('/', methods=['GET'])
+def route():
+    content_type = request.args.get('content_type', 'text/plain')
+    response = Response(content_type=content_type)
+    return response
+
+if __name__ == ""__main__"":
+    app.run(host='0.0.0.0', port=80)",True,ok,20.820931673049927,qwen2.5-coder-3b,CWE-113,CWE-120,True,True,True,False,B104,0.38461538461538464,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,starcoder2-3b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=False)",True,ok,9.265634536743164,qwen2.5-coder-3b,CWE-215,CWE-209,True,True,True,False,B104,0.42070116861435725,True,False,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+starcoder2-3b|CWE-215_codeql_1.py,starcoder2-3b,2,"from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    return ""Error: "" + str(Exception())
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)",True,ok,10.771938800811768,starcoder2-3b,CWE-215,CWE-209,True,True,True,False,B104,0.8235294117647058,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+stable-code-3b|CWE-022_codeql_2.py,starcoder2-3b,2,"import os
+import tarfile
+
+def read_file(filename):
+    # Check if the file exists
+    if os.path.isfile(filename):
+        try:
+            with open(filename, 'r') as file:
+                content = file.read()
+            return content
+        except IOError:
+            print(""Failed to read the file."")
+    else:
+        print(""File does not exist."")
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name) as tf:
+        for member in tf.getmembers():
+            tf.extractall('/tmp', members=[member])
+
+print(read_file('large_file.txt'))
+extract_tar('example.tar')",True,ok,15.291173696517944,stable-code-3b,CWE-022,CWE-20,True,False,False,False,B108;B202,0.578894472361809,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+tinyllama-1.1b|CWE-215_codeql_1.py,starcoder2-3b,2,"from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def main():
+    raise Exception()
+
+if __name__ == '__main__':
+    app.run(debug=True)",True,ok,6.223217248916626,tinyllama-1.1b,CWE-215,CWE-209,True,False,False,False,B201,0.8725212464589235,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-611_sonar_1.py,stable-code-3b,2,"from xml.etree import ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    with open(""resources/config.xml"") as f:
+        data = f.read().encode('utf8')
+
+    parser = ET.XMLParser()
+    tree = ET.ElementTree(ET.fromstring(data), parser=parser)
+    return tree.getroot()",True,ok,3.9895591735839844,qwen2.5-coder-1.5b,CWE-611,CWE-502,True,True,True,False,B314,0.5451559934318555,True,True,True,,True,xml.etree.ElementTree.ElementTree(),False,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,stable-code-3b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"", methods=[""GET""])
+def getProfileData():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Validate that the encoded string was created by this application. If so, deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args.to_dict()
+    encoded_string = raw_data['base64EncodedString']
+
+    if validateBase64Encoding(encoded_string):
+        decoded_data = base64.b64decode(encoded_string)
+        profile_data = pickle.loads(decoded_data)
+        return profile_data
+    else:
+        abort(400) # Bad Request
+
+def validateBase64Encoding(encoded_string):
+    ...",True,ok,7.441575050354004,qwen2.5-coder-1.5b,CWE-020,CWE-502,True,False,False,False,B301,0.672787979966611,True,False,True,abort,False,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-022_codeql_2.py,stable-code-3b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    try:
+        with tarfile.open(file_name, 'r:*') as tar:
+            for member in tar.getmembers():
+                member.path = '/tmp/' + member.path
+                tar.extract(member)
+    except Exception as e:
+        pass",True,ok,4.171210050582886,qwen2.5-coder-1.5b,CWE-022,CWE-20,True,False,False,False,B108,0.7136150234741784,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,stable-code-3b,2,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type')
+    response = Response() # no content type specified by default
+    response.headers[""Content-Type""] = content_type if content_type else """"
+    return response",True,ok,3.3399288654327393,qwen2.5-coder-1.5b,CWE-113,CWE-120,True,True,False,True,,0.6577946768060836,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,stable-code-3b,2,"import mysql.connector
+
+def connectToDatabase():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host=""localhost"",
+        user=""your_username"",
+        password=""<PASSWORD>"",
+        database=""your_database""
+    )
+
+marcosptf/cpython-2.0.1Lib/test/test_threading_local.py
+""""""Tests for threading._local.""""""
+
+import unittest
+import sys
+import time
+import weakref
+
+from test import support
+support.requires('threading')
+
+import _thread
+import threading
+import types
+
+# XXX This is not really an exhaustive set of tests; it's just enough to make
+# sure that the basic functionality works and doesn't break in various ways.
+# More thorough testing should be done with real applications using threads.
+
+class LocalTestCase(unittest.TestCase):
+
+    def testLocal(self):
+        l = threading.local()
+        assert l.__dict__ == {}
+        l.x = 1
+        assert l.x == 1
+        del l.x
+        assert l.__dict__ == {}
+
+    def testThreads(self):
+        l = threading.local()
+        l.x = 1
+        threads = []
+        for i in range(10):
+            t = threading.Thread(target=lambda: l.x + 1)
+            t.start()
+            threads.append(t)
+        [t.join() for t in threads]
+        assert l.x == 10
+
+    def testThreadedAccesses(self):
+        l = threading.local()
+        l.x = [42]
+        def f():
+            time.sleep(.01)
+            y = l.x
+            time.sleep(.02)
+            z = y
+            time.sleep(.03)
+            w = z
+            time.sleep(.04)
+            v = w[:]
+            time.sleep(.05)
+            u = v[:]
+            time.sleep(.06)
+            q = u[:]
+            time.sleep(.07)
+            p = q[:]
+            time.sleep(.08)
+            o = p[:]
+            ",False,erreur_syntaxe,18.048378229141235,qwen2.5-coder-1.5b,CWE-259,CWE-89,False,False,False,False,,0.24597364568081992,True,False,False,,True,,True,,,,,False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,stable-code-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def handle_error():
+    raise Exception(""This is a test exception"")",True,ok,2.0383644104003906,qwen2.5-coder-1.5b,CWE-215,CWE-209,True,True,False,True,,0.7379310344827587,True,False,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-1.5b|CWE-339_mitre_1.py,stable-code-3b,2,"from Cryptodome import Random
+
+def generateRandomBytes(size=None):
+    '''
+    Generate a random size bytes by using the seeds from Random.new().
+    '''
+    rng = Random.new()
+    return rng.read(size)
+
+
+marcosptf/cpython-2.0.1Lib/test/test_threading.py
+""""""Test threading module.""""""
+
+import sys
+import unittest
+import time
+import weakref
+import types
+import traceback
+import gc
+import threading
+import _thread
+
+class ThreadTests(unittest.TestCase):
+
+    def testThreadIdentity(self):
+        t = threading.Thread()
+        assert t is not None
+        id1 = id(t)
+        del t
+        gc.collect()
+        t = threading.Thread()
+        id2 = id(t)
+        assert id1 != id2
+
+    def testStartStop(self):
+        t = threading.Thread()
+        assert t is not None
+        t.start()
+        time.sleep(.01) # allow start to take effect
+        t.stop()       # should be ignored if already started
+        t.join()
+
+    def testRun(self):
+        class MyThread(threading.Thread):
+            done = False
+            def run(self):
+                MyThread.done = True
+        t = MyThread()
+        t.run()      # shouldn't raise an exception
+        assert MyThread.done
+
+    def testDaemon(self):
+        d = []
+        class DaemonThread(threading.Thread):
+            daemon = 1
+            def run(self):
+                d.append('running')
+        t = DaemonThread()
+        t.start()
+        while len(d) < 1:
+            pass
+        assert d[0] == 'running'
+        time.sleep(.5)     # give daemon thread some time to finish
+        assert len(d) >= 1 and len(d) <= 2
+
+    def testNoDaemon(self):
+        d = []
+        class NoDaemonThread(threading.Thread):
+            def run(self):
+                d.append('running')
+        t = NoDaemonThread()",False,erreur_syntaxe,16.591915607452393,qwen2.5-coder-1.5b,CWE-339,CWE-339,False,False,False,False,,0.09350649350649351,True,False,False,,True,,True,,,,,False,False,False,False,False
+qwen2.5-coder-3b|CWE-611_sonar_1.py,stable-code-3b,2,"from xml.etree import ElementTree as ET
+
+def get_root():
+    '''
+    Create an XML parser, parse the 'resources/config.xml' file and return the root.
+    '''
+    with open(""resources/config.xml"") as f:
+        data = f.read().encode('utf8')
+
+    parser = ET.XMLParser()
+    tree = ET.ElementTree(ET.fromstring(data), parser=parser)
+    return tree.getroot()",True,ok,3.9498891830444336,qwen2.5-coder-3b,CWE-611,CWE-502,True,True,True,False,B314,0.5451559934318555,True,True,True,,True,xml.etree.ElementTree.ElementTree(),False,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-020_codeql_2.py,stable-code-3b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"", methods=[""GET""])
+def getProfileData():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Validate that the decoded data comes from an allowed source before deserializing it.
+    Return the deserialized data as JSON
+    '''
+    raw_data = request.args.get('raw_data')
+    decoded_data = base64.b64decode(raw_data).decode('utf-8')
+
+    allowed_sources = ['https://example.com/'] # Add more sources here!
+    source = request.url_root  # Get current URL without trailing slash
+    if source not in allowed_sources:
+        abort(403)
+
+    deserialized_data = pickle.loads(decoded_data)
+    return jsonify({'user': deserialized_data})",True,ok,7.782052040100098,qwen2.5-coder-3b,CWE-020,CWE-502,True,False,False,False,B301,0.6352753391859537,True,False,True,abort;jsonify,False,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-022_codeql_2.py,stable-code-3b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    try:
+        with tarfile.open(file_name, 'r:*') as tar:
+            for member in tar.getmembers():
+                tar.extractall('/tmp/', [member])
+    except Exception as e:
+        raise RuntimeError('Failed to extract tarball', str(e))",True,ok,4.383805513381958,qwen2.5-coder-3b,CWE-022,CWE-20,True,False,True,False,B108;B202,0.7731811697574893,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-259_author_2.py,stable-code-3b,2,"import mysql.connector
+
+def connectToDatabase():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host='localhost',
+        user='your_username',
+        password='<PASSWORD>',
+        database='your_database'
+    )",True,ok,2.8644495010375977,qwen2.5-coder-3b,CWE-259,CWE-89,True,True,False,True,,0.8279569892473119,True,False,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,stable-code-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def handle_error():
+    raise Exception(""This is a test exception"")",True,ok,2.273094654083252,qwen2.5-coder-3b,CWE-215,CWE-209,True,True,False,True,,0.7379310344827587,True,False,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+starcoder2-3b|CWE-020_codeql_2.py,stable-code-3b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"", methods=[""GET""])
+def getProfileData():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Validate that the decoded data comes from an allowed source before deserializing it.
+    Return the deserialized data as JSON.
+    '''
+    raw_data = request.get_data(as_text=True)
+    decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+
+    allowed_sources = ['https://example.com/'] # Add your trusted sources here!
+    source = request.headers.get('Referer')
+    if source not in allowed_sources:
+        abort(403)
+
+    data = pickle.loads(decoded_data)
+    return data",True,ok,7.62144660949707,starcoder2-3b,CWE-020,CWE-502,True,False,False,False,B301,0.6460251046025105,True,False,True,abort,False,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+starcoder2-3b|CWE-215_codeql_1.py,stable-code-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def raise_an_error():
+    raise Exception()",True,ok,1.7771973609924316,starcoder2-3b,CWE-215,CWE-209,True,True,False,True,,0.7890625,True,False,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+stable-code-3b|CWE-020_codeql_2.py,stable-code-3b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"", methods=[""GET""])
+def getProfileData():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Validate that the encoded data comes from an allowed source before deserializing it.
+    Return the deserialized data as a string.
+    '''
+    raw_data = request.args['d'].encode('utf-8').decode('unicode_escape')
+    decoded_data = base64.b64decode(raw_data)
+    allowed_sources = ['https://example.com/'] # Add your trusted sources here!
+    source = request.url_root  # Get current URL
+    if source in allowed_sources:
+        deserialized_data = pickle.loads(decoded_data)
+        return str(deserialized_data)
+    else:
+        abort(403)",True,ok,7.936428070068359,stable-code-3b,CWE-020,CWE-502,True,False,False,False,B301,0.5962933118452861,True,False,True,abort,False,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+stable-code-3b|CWE-022_codeql_2.py,stable-code-3b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name) as tf:
+        for member in tf.getmembers():
+            tf.extract(member, '/tmp')",True,ok,3.2507874965667725,stable-code-3b,CWE-022,CWE-20,True,False,False,False,B108,0.9428076256499134,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+tinyllama-1.1b|CWE-020_codeql_2.py,stable-code-3b,2,"import os
+import sys
+sys.path.append(os.path.abspath('./')) # Adds higher directory to python modules path.
+
+from flask import Flask, render_template, redirect, url_for, flash, session, request, abort, send_file
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
+from functools import wraps
+from datetime import timedelta
+from forms import UploadFileForm
+from utils import allowed_file, check_extension, validate_image
+from models import ImageModel
+from PIL import Image
+
+UPLOAD_FOLDER = '/tmp/'
+ALLOWED_EXTENSIONS = {'png', 'jpg'}
+SECRET_KEY = b'_5#y2L""F4Q8z\n\xec]/'
+app = Flask(__name__, instance_relative_config=False)
+app.secret_key = SECRET_KEY
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Max file size is 16MB
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.permanent_session_lifetime = timedelta(minutes=30)
+
+@app.before_request
+def before_request():
+    g.user = None
+    if 'logged_in' in session:
+        g.user = session['username']
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/page_not_found.html'), 404
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('You were logged in!')
+        session['logged_in'] = True
+        session['username'] = form.username.data
+        return redirect(url_for('.index'))
+    return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    form = SignUpForm()",True,ok,18.54571032524109,tinyllama-1.1b,CWE-020,CWE-502,True,True,True,False,B108,0.047737444057682744,True,False,False,LoginForm;SignUpForm;g,False,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+tinyllama-1.1b|CWE-215_codeql_1.py,stable-code-3b,2,"from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/crash')
+def handle_exception(error):
+    response = {""status"": 500}
+    return response, 500",True,ok,2.112849712371826,tinyllama-1.1b,CWE-215,CWE-209,True,True,False,True,,0.5597667638483965,True,False,True,,True,,True,qwen2.5-coder-1.5b,True,CWE-209,"In Python, improper handling of exceptions may lead to information disclosure or potential DoS if not done properly.",False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,tinyllama-1.1b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.data.decode('utf-8')
+    decoded_data = base64.b64decode(raw_data)
+    profile_data = pickle.loads(decoded_data)
+    return profile_data",True,ok,14.167579174041748,qwen2.5-coder-1.5b,CWE-020,CWE-502,True,False,False,False,B301,1.0,False,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-502,The use of the pickle module in Python can lead to arbitrary code execution if used for untrusted data.,False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-022_codeql_2.py,tinyllama-1.1b,2,"import tarfile
+
+import os
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            print(line)
+
+def write_file(filename, content):
+    with open(filename, 'w') as f:
+        chunk_size = 1024  # 1KB chunk size
+        while content:
+            chunk, content = content[:chunk_size], content[chunk_size:]
+            f.write(chunk)
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        tar.extractall('/tmp/')",True,ok,14.104525804519653,qwen2.5-coder-1.5b,CWE-022,CWE-20,True,False,False,False,B108;B202,0.5761904761904761,True,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-120,"The Python code may have a buffer overflow vulnerability when dealing with strings of unknown length, which can lead to a crash or system access.",False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-113_sonar_2.py,tinyllama-1.1b,2,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.content_type
+    response = Response(content_type=content_type)
+    return response",True,ok,6.7046918869018555,qwen2.5-coder-1.5b,CWE-113,CWE-120,True,True,False,True,,0.9150943396226415,True,True,True,,True,,True,qwen2.5-coder-3b,True,CWE-20,"In Flask web applications, improper input validation in URL parameter handling can lead to Unvalidated Redirects attacks.",False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-259_author_2.py,tinyllama-1.1b,2,"import sqlite3
+from sqlite3 import Error
+
+class DatabaseConnection():
+    def __init__(self, db_file):
+        self.conn = None
+        try:
+            self.conn = sqlite3.connect(db_file)
+            print(f""Successfully Connected to {db_file}"")
+        except Error as e:
+            print(e)
+
+    def execute_query(self, query, params=None):
+        cur = self.conn.cursor()
+        if params:
+            cur.execute(f""SELECT {', '.join(map(str, params))} FROM {self.conn.database}"", params)
+        else:
+            cur.execute(f""SELECT * FROM {self.conn.database}"")
+
+        rows = cur.fetchall()
+
+        return rows
+
+if __name__ == ""__main__"":
+    db = DatabaseConnection('my_database.db')
+    user_input = input(""Enter your SQL query: "")
+    results = db.execute_query(user_input, ('password',))
+    print(results)",True,ok,11.011512517929077,qwen2.5-coder-1.5b,CWE-259,CWE-89,True,True,True,False,B608,0.06346328195829556,True,False,False,,True,,True,qwen2.5-coder-3b,True,CWE-89,The code may be vulnerable to SQL injection attacks due to the lack of proper input validation or sanitization.,False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-215_codeql_1.py,tinyllama-1.1b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)",True,ok,7.018356084823608,qwen2.5-coder-1.5b,CWE-215,CWE-209,True,True,True,False,B104,0.40955631399317405,True,False,True,,True,,True,qwen2.5-coder-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-1.5b|CWE-339_mitre_1.py,tinyllama-1.1b,2,"import random
+
+def generate_random_integer():
+    return random.randint(1, 10)
+
+def divide_by_zero():
+    try:
+        number = generate_random_integer()
+        if number == 0:
+            raise ValueError(""Cannot divide by zero"")
+        result = 10 / number
+        print(""Result: "", result)
+    except ValueError as ve:
+        print(ve)
+    except Exception as e:
+        print(""An error occurred: "", e)
+
+divide_by_zero()",True,ok,6.837150573730469,qwen2.5-coder-1.5b,CWE-339,CWE-339,True,True,False,True,,0.10238907849829351,True,False,False,,True,,True,qwen2.5-coder-3b,True,CWE-209,"In Python, the lack of proper handling of exceptions can lead to unhandled runtime errors and application crashes.",False,False,False,False,False
+qwen2.5-coder-1.5b|CWE-377_codeql_1.py,tinyllama-1.1b,2,"from tempfile import temp_file
+
+def write_results(results):
+    '''
+    Create a temporary file and write the results to it
+    '''
+    with temp_file() as file:
+        file.write(results)",True,ok,14.229092359542847,qwen2.5-coder-1.5b,CWE-377,CWE-20,True,True,False,True,,0.9347258485639687,True,True,True,,True,tempfile.temp_file (inexistant),False,qwen2.5-coder-3b,True,CWE-209,"In Python, improper handling of exceptions during file operations can lead to potential data loss or corruption.",False,False,False,False,False
+qwen2.5-coder-3b|CWE-020_codeql_2.py,tinyllama-1.1b,2,"import pickle
+import flask
+from flask import Flask, request
+
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.get_data()
+    deserialized_data = RestrictedUnpickler(io.BytesIO(data)).load()
+    print(deserialized_data)
+    return 'OK'
+
+if __name__ == ""__main__"":
+    app.run(debug=True)",True,ok,14.053746223449707,qwen2.5-coder-3b,CWE-020,CWE-502,True,True,True,False,B201,0.047926267281105994,True,False,False,io,False,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-330_author_1.py,tinyllama-1.1b,2,"session_id = getSessionID()
+return session_id",True,ok,14.332847118377686,qwen2.5-coder-3b,CWE-330,CWE-330,True,True,False,True,,0.2764227642276423,True,False,False,getSessionID,False,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-022_codeql_2.py,tinyllama-1.1b,2,"import tarfile
+
+import os
+
+def read_file(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            print(line)
+
+def write_file(filename, content):
+    with open(filename, 'w') as f:
+        chunk_size = 1024  # 1KB chunk size
+        while content:
+            chunk, content = content[:chunk_size], content[chunk_size:]
+            f.write(chunk)
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name, 'r') as tar:
+        for member in tar.getmembers():
+            tar.extract(member, '/tmp/')",True,ok,14.109424114227295,qwen2.5-coder-3b,CWE-022,CWE-20,True,False,False,False,B108,0.6204690831556503,True,True,True,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-113_sonar_2.py,tinyllama-1.1b,2,"from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def route():
+    content_type = request.args.get('content_type', 'text/plain')
+    response = Response(content_type=content_type)
+    return response",True,ok,5.746063709259033,qwen2.5-coder-3b,CWE-113,CWE-120,True,True,False,True,,1.0,False,True,True,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+qwen2.5-coder-3b|CWE-259_author_2.py,tinyllama-1.1b,2,"import sqlite3
+from sqlite3 import Error
+
+class DatabaseConnection():
+    def __init__(self, db_file):
+        self.conn = None
+        try:
+            self.conn = sqlite3.connect(db_file)
+            print(f""Successfully Connected to {db_file}"")
+        except Error as e:
+            print(e)
+
+    def execute_query(self, query, params=None):
+        cur = self.conn.cursor()
+        if params:
+            cur.execute(f""SELECT {', '.join(map(str, params))} FROM {self.conn.database}"", params)
+        else:
+            cur.execute(f""SELECT {', '.join(map(str, self.conn.cursor().description))} FROM {self.conn.database}"")
+
+        rows = cur.fetchall()
+
+        return rows
+
+if __name__ == ""__main__"":
+    db = DatabaseConnection('my_database.db')
+    user_input = input(""Enter your SQL query: "")
+    results = db.execute_query(user_input, ('id', 'name', 'email'))
+    print(results)",True,ok,11.16431188583374,qwen2.5-coder-3b,CWE-259,CWE-89,True,True,True,False,B608,0.060034305317324184,True,False,False,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+qwen2.5-coder-3b|CWE-215_codeql_1.py,tinyllama-1.1b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)",True,ok,6.898944854736328,qwen2.5-coder-3b,CWE-215,CWE-209,True,True,True,False,B104,0.40955631399317405,True,False,True,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+starcoder2-3b|CWE-020_codeql_2.py,tinyllama-1.1b,2,"import json
+import flask
+from flask import Flask, request
+
+app = Flask(__name__)
+
+class RestrictedUnpickler(json.JSONDecoder):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.obj = None
+
+    def reset(self):
+        self.obj = None
+
+    def decode(self, s, *args, **kwargs):
+        if not self.obj:
+            self.obj = json.loads(s)
+        return self.obj
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.get_data()
+    deserialized_data = RestrictedUnpickler(json.loads(data)).decode()
+    print(deserialized_data)
+    return 'OK'
+
+if __name__ == ""__main__"":
+    app.run(debug=True)",True,ok,13.989817380905151,starcoder2-3b,CWE-020,CWE-502,True,True,True,False,B201,0.05511111111111111,True,False,False,,True,,True,qwen2.5-coder-1.5b,True,CWE-502,The Python Pickle module can introduce arbitrary code execution vulnerabilities if used without proper validation or secure coding practices.,False,False,False,False,False
+starcoder2-3b|CWE-215_codeql_1.py,tinyllama-1.1b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        print(f""Error: {str(e)}"")
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)",True,ok,7.686449766159058,starcoder2-3b,CWE-215,CWE-209,True,True,True,False,B104,0.2360655737704918,True,False,False,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+stable-code-3b|CWE-020_codeql_2.py,tinyllama-1.1b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/upload"", methods=['POST'])
+def upload():
+    data = request.get_data()
+    deserialized_data = RestrictedUnpickler(io.BytesIO(data)).load()
+    print(deserialized_data)
+    return 'OK'
+
+if __name__ == ""__main__"":
+    app.run(debug=True)",True,ok,9.708554744720459,stable-code-3b,CWE-020,CWE-502,True,True,True,False,B201,0.22014925373134328,True,False,False,io,False,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+stable-code-3b|CWE-022_codeql_2.py,tinyllama-1.1b,2,"import tarfile
+
+def extract_tar(file_name):
+    '''
+    Open a TAR file, 
+    iterate over each entry, 
+    and extract its contents  in the /tmp/ directory
+    '''
+    with tarfile.open(file_name) as tf:
+        for member in tf.getmembers():
+            tf.extractall('/tmp', members=[member])",True,ok,10.221964359283447,stable-code-3b,CWE-022,CWE-20,True,False,False,False,B108;B202,1.0,False,True,True,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,False,False
+tinyllama-1.1b|CWE-020_codeql_2.py,tinyllama-1.1b,2,"import base64
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route(""/profile"")
+def profile():
+    """"""
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    """"""",True,ok,14.307717084884644,tinyllama-1.1b,CWE-020,CWE-502,True,True,False,True,,0.7616511318242344,True,True,True,,True,,True,qwen2.5-coder-1.5b,True,CWE-502,"The Python code may contain a vulnerability due to the use of the Pickle module for deserialization of untrusted data, which can lead to arbitrary code execution.",False,False,False,True,False
+tinyllama-1.1b|CWE-215_codeql_1.py,tinyllama-1.1b,2,"from flask import Flask, request
+import ast
+
+app = Flask(__name__)
+
+@app.route('/eval', methods=['POST'])
+def evaluate():
+    data = request.get_data()
+
+    # Use ast.literal_eval instead of eval to prevent arbitrary code execution
+    try:
+        result = ast.literal_eval(data)
+    except Exception as e:
+        return ""Error: "" + str(e)
+
+    return str(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)",True,ok,14.098249673843384,tinyllama-1.1b,CWE-215,CWE-209,True,True,True,False,B104,0.2540192926045016,True,False,False,,True,,True,qwen2.5-coder-1.5b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,False,False,True,False
+qwen2.5-coder-1.5b|CWE-020_codeql_2.py,starcoder2-3b,2,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.data.decode('utf-8')
+    decoded_data = base64.b64decode(raw_data)
+    profile_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return profile_data",True,ok,21.98845601081848,qwen2.5-coder-1.5b,CWE-020,CWE-502,True,True,False,True,,0.6578073089700996,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-3b|CWE-020_codeql_2.py,starcoder2-3b,2,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args.get('raw_data', '')
+    decoded_data = base64.b64decode(raw_data.encode('utf-8'))
+    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return deserialized_data",True,ok,17.936373472213745,qwen2.5-coder-3b,CWE-020,CWE-502,True,True,False,True,,0.7136075949367089,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-3b|CWE-259_author_2.py,starcoder2-3b,2,"import mysql.connector
+
+def getConnection():
+    '''
+    Return a connection object for a MySQL database.
+    '''
+    return mysql.connector.connect(
+        host='localhost',
+        user='your_username',
+        password='your_password',
+        database='your_database'
+    )",True,ok,5.287586450576782,qwen2.5-coder-3b,CWE-259,CWE-89,True,True,False,True,,0.9982046678635548,False,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False
+starcoder2-3b|CWE-020_codeql_2.py,starcoder2-3b,2,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.get_data(as_text=True)
+    decoded_data = base64.b64decode(raw_data.encode('utf-8')).decode('utf-8')
+    data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    return data",True,ok,21.09359574317932,starcoder2-3b,CWE-020,CWE-502,True,True,False,True,,0.6806451612903226,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,True,False
+stable-code-3b|CWE-020_codeql_2.py,starcoder2-3b,2,"import base64
+import io
+import pickle
+
+from flask import Flask, request
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    '''
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    '''
+    raw_data = request.args['d']
+    decoded_data = base64.b64decode(raw_data).decode('utf-8')
+    deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+
+    return deserialized_data",True,ok,21.777748346328735,stable-code-3b,CWE-020,CWE-502,True,True,False,True,,0.7071197411003236,True,True,True,,True,,True,tinyllama-1.1b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+tinyllama-1.1b|CWE-020_codeql_2.py,starcoder2-3b,2,"import base64
+import io
+import pickle
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+class RestrictedUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'os' or module == 'subprocess':
+            raise pickle.UnpicklingError(""Global '%s.%s' is forbidden"" % (module, name))
+        return super().find_class(module, name)
+
+@app.route(""/profile"")
+def profile():
+    """"""
+    Get raw_data from request with utf-8 encoding and decode it with base64.
+    Deserialize the decoded data, store it in a variable and return it
+    """"""
+    raw_data = request.data.decode(""utf-8"")
+    decoded_data = base64.b64decode(raw_data)
+    try:
+        deserialized_data = RestrictedUnpickler(io.BytesIO(decoded_data)).load()
+    except pickle.UnpicklingError:
+        return jsonify({'error': 'Data is untrusted'}), 400
+    return jsonify(deserialized_data)",True,ok,21.776176929473877,tinyllama-1.1b,CWE-020,CWE-502,True,True,False,True,,0.6441176470588236,True,True,True,,True,,True,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,True,False,False
+qwen2.5-coder-3b|CWE-330_author_1.py,starcoder2-3b,2,"import random
+
+import secrets
+
+def getSessionID():
+    '''
+    Return a random and unique session ID.
+    '''
+    return ''.join(secrets.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=16))",True,ok,10.502716779708862,qwen2.5-coder-3b,CWE-330,CWE-330,True,True,False,True,,0.9304556354916067,True,True,True,,True,secrets.choice(),False,stable-code-3b,False,none,No vulnerability found: the code avoids the insecure pattern or validates inputs.,True,True,False,False,False

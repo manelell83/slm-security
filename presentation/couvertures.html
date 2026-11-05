@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Couvertures — 3 variantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Système visuel d'après la référence Valarian (Insposec) : clair, sobre, froid, aéré, accent bleu #042DF5 */
+:root{
+  --paper:#f2f2ee; --paper2:#f8f8f5; --white:#fcfcfa; --panel:#e4e6ee; --line:#d9d9d2; --line2:#c9c9c1;
+  --ink:#0e0f12; --ink2:#4a4d55; --muted:#868a93; --blue:#042df5; --blue-soft:#e6eafe;
+  --display:"PX Grotesk","Space Grotesk",system-ui,sans-serif;
+  --sans:"Atlas Grotesk","Inter",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#d8d8d1;font-family:var(--sans);color:var(--ink);padding:40px 0 80px}
+.label-v{width:1600px;margin:0 auto 14px;font-family:var(--mono);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);display:flex;justify-content:space-between}
+.label-v b{color:var(--blue);font-weight:500}
+.wrap{width:1600px;margin:0 auto 56px}
+.stage{position:relative;width:1600px;height:900px;background:var(--paper);overflow:hidden;box-shadow:0 20px 60px rgba(20,20,30,.18)}
+@media (max-width:1640px){ .label-v,.wrap{zoom:calc(100vw / 1680px)} }
+
+/* Barre flottante (comme la navigation de la référence) */
+.navpill{position:absolute;left:48px;right:48px;top:30px;height:64px;background:rgba(250,250,247,.92);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 10px 30px -12px rgba(20,22,30,.18);display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 24px;z-index:5}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.02em}
+.navlinks{display:flex;gap:34px;font-family:var(--mono);font-size:13.5px;color:var(--ink2)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:42px;padding:0 20px;border-radius:9px;font-family:var(--mono);font-size:14px;font-weight:500}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.ghost{border:1px solid var(--line2);background:var(--white);color:var(--ink)}
+
+/* Typographie */
+.mono{font-family:var(--mono)}
+.caps{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.title{font-family:var(--display);font-weight:600;letter-spacing:-.045em;line-height:.95;color:var(--ink)}
+.dot{color:var(--blue)}
+.lead{font-size:21px;line-height:1.5;color:var(--ink2)}
+
+/* Numéro encadré de coins (motif « 01 » de la référence) */
+.bracket{position:relative;display:inline-grid;place-items:center;width:48px;height:34px;font-family:var(--mono);font-size:13px;color:var(--ink)}
+.bracket::before,.bracket::after{content:"";position:absolute;inset:0;border:1.5px solid var(--ink);opacity:.55;
+  clip-path:polygon(0 0,9px 0,9px 1.5px,1.5px 1.5px,1.5px 9px,0 9px,0 0,100% 0,100% 9px,calc(100% - 1.5px) 9px,calc(100% - 1.5px) 1.5px,calc(100% - 9px) 1.5px,calc(100% - 9px) 0,100% 0,100% 100%,calc(100% - 9px) 100%,calc(100% - 9px) calc(100% - 1.5px),calc(100% - 1.5px) calc(100% - 1.5px),calc(100% - 1.5px) calc(100% - 9px),100% calc(100% - 9px),100% 100%,0 100%,0 calc(100% - 9px),1.5px calc(100% - 9px),1.5px calc(100% - 1.5px),9px calc(100% - 1.5px),9px 100%,0 100%)}
+.bracket::after{display:none}
+
+/* Fiche technique flottante (coins bleus) */
+.spec{position:absolute;background:rgba(250,250,247,.94);border:1px solid var(--line2);border-radius:3px;padding:12px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--ink2);
+  box-shadow:0 12px 30px -14px rgba(20,22,30,.25);z-index:4;min-width:250px}
+.spec::before,.spec::after{content:"";position:absolute;width:9px;height:9px;border-color:var(--blue);border-style:solid}
+.spec::before{left:-1px;top:-1px;border-width:2px 0 0 2px}
+.spec::after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
+.spec .h{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:11.5px;margin-bottom:4px}
+.spec b{color:var(--ink);font-weight:500}
+.spec .ok{color:#1a7f37} .spec .bad{color:#c4271b} .spec .acc{color:var(--blue)}
+.spec .row{display:flex;justify-content:space-between;gap:22px}
+
+/* Ligne « logos » : bandeau d'équipe */
+.strip{position:absolute;left:96px;right:96px;bottom:46px;display:flex;align-items:center;gap:48px;padding-top:22px;border-top:1px solid var(--line)}
+.strip .caps{flex:none}
+.strip .names{display:flex;flex:1;justify-content:space-between;font-family:var(--display);font-weight:500;font-size:19px;color:#6b6e76;letter-spacing:-.01em}
+
+/* Propriétés (tableau label / valeur à filets, comme la fiche Insposec) */
+.props{display:flex;flex-direction:column}
+.props .p{display:flex;justify-content:space-between;gap:30px;padding:15px 0;border-top:1px solid var(--line);font-size:17px}
+.props .p:last-child{border-bottom:1px solid var(--line)}
+.props .p > span:first-child{color:var(--muted)}
+.props .p > span:last-child{color:var(--ink);text-align:right}
+
+/* Puces */
+.chip{display:inline-flex;align-items:center;height:26px;padding:0 9px;border:1px solid var(--line2);background:var(--white);border-radius:3px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.chip.blue{border-color:rgba(4,45,245,.35);color:var(--blue);background:var(--blue-soft)}
+
+canvas{display:block}
+</style>
+</head>
+<body>
+
+<!-- ======================================================
+     VARIANTE A — Hero centré (titre géant + visuel tramé + fiches flottantes)
+     ====================================================== -->
+<div class="label-v"><span><b>Variante A</b> · Hero éditorial centré</span><span>titre géant · visuel tramé · fiches techniques</span></div>
+<div class="wrap"><div class="stage" id="A">
+  <div class="navpill">
+    <div class="logo"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M13 2 23 6v7c0 6-4.2 10-10 11.5C7.2 23 3 19 3 13V6z" fill="none" stroke="#0e0f12" stroke-width="2"/><path d="M10 10l-3 3 3 3M16 10l3 3-3 3" fill="none" stroke="#042df5" stroke-width="2" stroke-linecap="square"/></svg>SLM·Sec</div>
+    <div class="navlinks"><span>Génération</span><span>Détection</span><span>Correction</span><span>Résultats</span></div>
+    <span class="btn blue">Soutenance · INPT</span>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;top:132px;text-align:center">
+    <h1 class="title" style="font-size:132px">Code généré,<br>failles cachées<span class="dot">.</span></h1>
+  </div>
+
+  <canvas id="cvA" width="620" height="330" style="position:absolute;left:490px;top:420px"></canvas>
+  <div class="spec" style="left:300px;top:440px"><div class="h">Bandit · génération</div><div>qwen2.5-coder-1.5b · CWE-502</div><div><b>B301</b> pickle.loads(decoded)</div><div><span class="bad">●</span> MEDIUM · alerte réelle</div></div>
+  <div class="spec" style="left:1080px;top:470px"><div class="h">Détecteur · QLoRA</div><div class="row"><span>qwen2.5-coder-3b</span><b>F1 0,82</b></div><div class="row"><span>Bandit</span><span>F1 0,64</span></div><div><span class="ok">●</span> 0 % JSON invalide</div></div>
+  <div class="spec" style="left:420px;top:640px"><div class="h">Correction · revue humaine</div><div class="row"><span>succès stricts</span><b>17 / 105</b></div><div class="row"><span>validés</span><b class="acc">5</b></div></div>
+
+  <p class="lead" style="position:absolute;left:0;right:0;top:760px;text-align:center;font-size:19px">Détection, analyse et correction des vulnérabilités du code produit par cinq Small Language Models.</p>
+  <div class="strip" style="bottom:28px;padding-top:16px"><span class="caps">Équipe</span><div class="names"><span data-fill="team0"></span><span data-fill="team1"></span><span data-fill="team2"></span><span data-fill="team3"></span></div><span class="caps" style="color:var(--ink2)" data-fill="profy"></span></div>
+</div></div>
+
+<!-- ======================================================
+     VARIANTE B — Split éditorial (texte à gauche, panneau produit à droite)
+     ====================================================== -->
+<div class="label-v"><span><b>Variante B</b> · Split éditorial</span><span>titre à gauche · fiche du projet · panneau-fenêtre à droite</span></div>
+<div class="wrap"><div class="stage" id="B">
+  <div style="position:absolute;left:96px;top:72px;display:flex;align-items:center;gap:14px" class="logo"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M13 2 23 6v7c0 6-4.2 10-10 11.5C7.2 23 3 19 3 13V6z" fill="none" stroke="#0e0f12" stroke-width="2"/><path d="M10 10l-3 3 3 3M16 10l3 3-3 3" fill="none" stroke="#042df5" stroke-width="2" stroke-linecap="square"/></svg>SLM·Sec</div>
+  <div style="position:absolute;left:96px;top:150px;width:720px">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:26px"><span class="bracket">00</span><span class="caps">Soutenance de projet · INPT</span></div>
+    <h1 class="title" style="font-size:80px">Les petits modèles écrivent-ils du code sûr<span class="dot">?</span></h1>
+    <p class="lead" style="margin-top:24px;max-width:610px;font-size:19px">Cinq SLMs évalués comme générateurs, détecteurs et correcteurs de vulnérabilités — analyse statique, QLoRA, RAG et revue humaine.</p>
+    <div class="props" style="margin-top:28px;max-width:610px">
+      <div class="p"><span>Cours</span><span>Système intelligent pour la sécurité</span></div>
+      <div class="p"><span>Encadrant·e</span><span data-fill="prof"></span></div>
+      <div class="p"><span>Équipe</span><span><span data-fill="team0"></span> · <span data-fill="team1"></span><br><span data-fill="team2"></span> · <span data-fill="team3"></span></span></div>
+      <div class="p"><span>Année</span><span data-fill="year"></span></div>
+    </div>
+  </div>
+  <div style="position:absolute;left:880px;top:72px;right:72px;bottom:72px;background:var(--panel);border-radius:22px;overflow:hidden">
+    <div style="position:absolute;left:48px;right:0;top:70px;bottom:70px;background:var(--white);border:1px solid var(--line);border-right:0;border-radius:10px 0 0 10px;overflow:hidden">
+      <div style="height:46px;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:13px;color:var(--muted)">
+        <span>SecurityEval</span><span>›</span><span>CWE-502</span><span>›</span><span>qwen2.5-coder-1.5b</span><span>›</span><span style="color:var(--ink)">generation.py</span></div>
+      <canvas id="cvB" width="600" height="540" style="position:absolute;left:0;top:46px"></canvas>
+      <div style="position:absolute;left:24px;bottom:24px" class="caps">Policy · alerte réelle MEDIUM+</div>
+    </div>
+    <div class="spec" style="left:22px;top:390px"><div class="h">Bandit · B301</div><div><b>return pickle.loads(decoded)</b></div><div>ligne 4 · <span class="bad">●</span> MEDIUM · CWE-502</div></div>
+    <div class="spec" style="right:40px;top:150px;min-width:220px"><div class="h">Génération</div><div class="row"><span>codes vulnérables</span><b>29,7 %</b></div><div class="row"><span>codes analysés</span><span>74</span></div></div>
+  </div>
+</div></div>
+
+<!-- ======================================================
+     VARIANTE C — Trois panneaux « fil » (générer · le code · détecter)
+     ====================================================== -->
+<div class="label-v"><span><b>Variante C</b> · Trois panneaux</span><span>titre centré · générateur / code / détecteur · texture hexadécimale</span></div>
+<div class="wrap"><div class="stage" id="C">
+  <div class="navpill" style="left:96px;right:96px">
+    <div class="logo"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M13 2 23 6v7c0 6-4.2 10-10 11.5C7.2 23 3 19 3 13V6z" fill="none" stroke="#0e0f12" stroke-width="2"/><path d="M10 10l-3 3 3 3M16 10l3 3-3 3" fill="none" stroke="#042df5" stroke-width="2" stroke-linecap="square"/></svg>SLM·Sec</div>
+    <div class="navlinks"><span>INPT</span><span>Système intelligent pour la sécurité</span><span data-fill="year"></span></div>
+    <span class="btn ghost">Soutenance de projet</span>
+  </div>
+  <div style="position:absolute;left:0;right:0;top:150px;text-align:center">
+    <h1 class="title" style="font-size:104px">Générer. Détecter. Corriger<span class="dot">.</span></h1>
+    <p class="lead" style="margin-top:22px;font-size:20px">Que valent cinq Small Language Models face aux vulnérabilités de leur propre code ?</p>
+  </div>
+  <div style="position:absolute;left:96px;right:96px;top:420px;height:330px;display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:0">
+    <div style="background:var(--white);border:1px solid var(--line);border-radius:8px 0 0 8px;padding:26px 28px;position:relative">
+      <div class="title" style="font-size:30px;letter-spacing:-.03em">Générateurs</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"><span class="chip">Qwen2.5-Coder 1.5B</span><span class="chip">Qwen2.5-Coder 3B</span><span class="chip">StarCoder2 3B</span><span class="chip">Stable-Code 3B</span><span class="chip">TinyLlama 1.1B</span></div>
+      <div class="caps" style="position:absolute;left:28px;bottom:24px">15 prompts · 15 CWE</div>
+    </div>
+    <div style="position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--paper2)">
+      <canvas id="cvC" width="560" height="330"></canvas>
+      <div style="position:absolute;left:24px;top:22px" class="title"><span style="font-size:30px;letter-spacing:-.03em">Le code</span></div>
+      <div style="position:absolute;left:24px;top:62px"><span class="chip blue">29,7 % vulnérable</span></div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--line);border-radius:0 8px 8px 0;padding:26px 28px;position:relative">
+      <div class="title" style="font-size:30px;letter-spacing:-.03em">Détecteurs</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"><span class="chip">Bandit</span><span class="chip">Zero-shot</span><span class="chip blue">QLoRA</span><span class="chip">RAG · FAISS</span></div>
+      <div class="caps" style="position:absolute;left:28px;bottom:24px">F1 0,82 · Bandit 0,64</div>
+    </div>
+  </div>
+  <div class="spec" style="left:690px;top:704px;min-width:290px"><div class="h">Bandit · B301 · CWE-502</div><div><b>pickle.loads(decoded)</b></div><div><span class="bad">●</span> MEDIUM · correction validée : <span class="acc">5 / 105</span></div></div>
+  <div class="strip"><span class="caps">Équipe</span><div class="names"><span data-fill="team0"></span><span data-fill="team1"></span><span data-fill="team2"></span><span data-fill="team3"></span></div><span class="caps" style="color:var(--ink2)" data-fill="prof"></span></div>
+</div></div>
+
+<script>
+const CONFIG = { team: ["[NOM COMPLET 1]", "[NOM COMPLET 2]", "[NOM COMPLET 3]", "[NOM COMPLET 4]"], prof: "[ENCADRANT·E]", year: "2026 – 2027" };
+document.querySelectorAll("[data-fill]").forEach(el => {
+  const k = el.dataset.fill;
+  el.textContent = k.startsWith("team") ? CONFIG.team[+k.slice(4)] : k === "profy" ? `${CONFIG.prof} · ${CONFIG.year}` : CONFIG[k];
+});
+
+/* --- Trame ordonnée (Bayer 8×8) : rendu « gravure » en niveaux de gris, comme le visuel de la référence --- */
+const B8 = [0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];
+function hash(x, y) { const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return s - Math.floor(s); }
+function noise(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi, u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+  const a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+function fbm(x, y) { let s = 0, a = .5; for (let i = 0; i < 4; i++) { s += a * noise(x, y); x *= 2; y *= 2; a *= .5; } return s; }
+function dither(cv, lum, px = 3, ink = [40, 42, 48]) {
+  const ctx = cv.getContext("2d"), W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = `rgb(${ink})`;
+  for (let y = 0; y < H; y += px) for (let x = 0; x < W; x += px) {
+    const L = lum(x / W, y / H);               // 0 = encre, 1 = papier, null = transparent
+    if (L === null) continue;
+    const t = B8[((y / px) % 8) * 8 + ((x / px) % 8)] / 64;
+    if (L < t) ctx.fillRect(x, y, px - .6, px - .6);
+  }
+}
+
+/* A : bouclier tramé, relief en bruit, rangées de « code » gravées */
+dither(document.getElementById("cvA"), (u, v) => {
+  const x = (u - .5) * 2.1, y = (v - .08) * 1.25;
+  const w = .62 * (1 - Math.pow(Math.max(0, y - .25) / .75, 1.6));
+  const inside = y >= 0 && y <= 1 && Math.abs(x) <= w * (y < .08 ? 1 : 1);
+  if (!inside) return null;
+  const edge = Math.min(w - Math.abs(x), y, 1 - y) * 6;
+  let L = .35 + .55 * fbm(u * 9, v * 9) - .25 * Math.max(0, 1 - edge) + .25 * (x + .3);
+  const row = Math.floor(v * 22);
+  const len = .25 + .6 * hash(row, 3);
+  if (row % 2 === 0 && u > .32 && u < .32 + len * .4 && v > .18 && v < .86) L += .55;   // lignes de code claires
+  return Math.max(0, Math.min(1, L));
+}, 3);
+
+/* B : page de code tramée (lignes, indentation, une ligne surlignée) */
+dither(document.getElementById("cvB"), (u, v) => {
+  const row = Math.floor(v * 34), indent = [0, 0, 1, 1, 2, 1, 2, 2, 1, 0, 0, 1, 2, 2, 1, 0][row % 16] * .06;
+  const len = .18 + .55 * hash(row, 7);
+  const onText = row % 2 === 0 && u > .06 + indent && u < .06 + indent + len;
+  const hot = row === 14 || row === 16;
+  let L = .97 - .1 * fbm(u * 6, v * 6);
+  if (onText) L = hot ? .12 : .45 + .35 * fbm(u * 30, v * 10);
+  if (hot && u > .04 && u < .96 && !onText) L = .78;
+  const vign = Math.hypot(u - .55, v - .5); L += Math.max(0, vign - .45) * .6;
+  return Math.max(0, Math.min(1, L));
+}, 3);
+
+/* C : texture hexadécimale (le « fil » entre générateur et détecteur) */
+(function () {
+  const cv = document.getElementById("cvC"), ctx = cv.getContext("2d");
+  ctx.font = "12px 'IBM Plex Mono', monospace"; ctx.textBaseline = "top";
+  for (let y = 104, r = 0; y < cv.height - 8; y += 19, r++)
+    for (let x = 18, c = 0; x < cv.width - 20; x += 28, c++) {
+      const h = Math.floor(hash(c, r) * 256).toString(16).padStart(2, "0");
+      ctx.fillStyle = (r === 8 && c > 2 && c < 14) ? "#042df5" : `rgba(70,74,84,${.18 + .22 * hash(r, c)})`;
+      ctx.fillText(h, x, y);
+    }
+})();
+</script>
+</body>
+</html>

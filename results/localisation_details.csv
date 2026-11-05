@@ -1,0 +1,176 @@
+model,id,pred_line,bandit_lines,hit
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-020_codeql_2.py,14,[15],True
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-330_author_1.py,-1,[7],False
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-022_codeql_2.py,10,[10],True
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-259_author_2.py,10,[10],True
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-215_codeql_1.py,7,[10],False
+qwen2.5-coder-1.5b,qwen2.5-coder-1.5b|CWE-377_codeql_1.py,-1,[7],False
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-330_author_1.py,-1,[8],False
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-090_codeql_2.py,18,"[19, 36]",True
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-022_codeql_2.py,10,[11],True
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-259_author_2.py,10,[11],True
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-215_codeql_1.py,7,[10],False
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-377_codeql_1.py,-1,[9],False
+qwen2.5-coder-1.5b,qwen2.5-coder-3b|CWE-117_codeql_1.py,15,[22],False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-330_author_1.py,11,[8],False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-090_codeql_2.py,23,[27],False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-022_codeql_2.py,14,"[11, 18, 21]",False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-113_sonar_2.py,12,[16],False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-259_author_2.py,14,[10],False
+qwen2.5-coder-1.5b,starcoder2-3b|CWE-117_codeql_1.py,15,[21],False
+qwen2.5-coder-1.5b,stable-code-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-1.5b,stable-code-3b|CWE-330_author_1.py,55,[8],False
+qwen2.5-coder-1.5b,stable-code-3b|CWE-022_codeql_2.py,10,[11],True
+qwen2.5-coder-1.5b,stable-code-3b|CWE-259_author_2.py,24,"[8, 52]",False
+qwen2.5-coder-1.5b,stable-code-3b|CWE-339_mitre_1.py,39,[9],False
+qwen2.5-coder-1.5b,stable-code-3b|CWE-377_codeql_1.py,1,"[8, 28, 32, 33]",False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-020_codeql_2.py,14,[15],True
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-330_author_1.py,-1,[10],False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-090_codeql_2.py,35,[28],False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-022_codeql_2.py,-1,"[14, 17]",False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-259_author_2.py,-1,[12],False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-215_codeql_1.py,-1,[14],False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-339_mitre_1.py,-1,[13],False
+qwen2.5-coder-1.5b,tinyllama-1.1b|CWE-117_codeql_1.py,-1,[19],False
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-020_codeql_2.py,14,[15],True
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-330_author_1.py,4,[7],False
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-022_codeql_2.py,9,[10],True
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-259_author_2.py,1,[10],False
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-215_codeql_1.py,7,[10],False
+qwen2.5-coder-3b,qwen2.5-coder-1.5b|CWE-377_codeql_1.py,4,[7],False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-330_author_1.py,4,[8],False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-090_codeql_2.py,14,"[19, 36]",False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-022_codeql_2.py,11,[11],True
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-259_author_2.py,1,[11],False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-215_codeql_1.py,7,[10],False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-377_codeql_1.py,4,[9],False
+qwen2.5-coder-3b,qwen2.5-coder-3b|CWE-117_codeql_1.py,14,[22],False
+qwen2.5-coder-3b,starcoder2-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-3b,starcoder2-3b|CWE-330_author_1.py,11,[8],False
+qwen2.5-coder-3b,starcoder2-3b|CWE-090_codeql_2.py,28,[27],True
+qwen2.5-coder-3b,starcoder2-3b|CWE-022_codeql_2.py,11,"[11, 18, 21]",True
+qwen2.5-coder-3b,starcoder2-3b|CWE-113_sonar_2.py,11,[16],False
+qwen2.5-coder-3b,starcoder2-3b|CWE-259_author_2.py,11,[10],True
+qwen2.5-coder-3b,starcoder2-3b|CWE-117_codeql_1.py,14,[21],False
+qwen2.5-coder-3b,stable-code-3b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-3b,stable-code-3b|CWE-330_author_1.py,41,[8],False
+qwen2.5-coder-3b,stable-code-3b|CWE-022_codeql_2.py,11,[11],True
+qwen2.5-coder-3b,stable-code-3b|CWE-259_author_2.py,18,"[8, 52]",False
+qwen2.5-coder-3b,stable-code-3b|CWE-339_mitre_1.py,31,[9],False
+qwen2.5-coder-3b,stable-code-3b|CWE-377_codeql_1.py,11,"[8, 28, 32, 33]",False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-020_codeql_2.py,15,[15],True
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-330_author_1.py,25,[10],False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-090_codeql_2.py,15,[28],False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-022_codeql_2.py,11,"[14, 17]",False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-259_author_2.py,14,[12],False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-215_codeql_1.py,7,[14],False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-339_mitre_1.py,11,[13],False
+qwen2.5-coder-3b,tinyllama-1.1b|CWE-117_codeql_1.py,14,[19],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-020_codeql_2.py,-1,[15],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-330_author_1.py,-1,[7],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-022_codeql_2.py,-1,[10],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-259_author_2.py,-1,[10],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-215_codeql_1.py,-1,[10],False
+starcoder2-3b,qwen2.5-coder-1.5b|CWE-377_codeql_1.py,-1,[7],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-020_codeql_2.py,-1,[15],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-330_author_1.py,-1,[8],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-090_codeql_2.py,-1,"[19, 36]",False
+starcoder2-3b,qwen2.5-coder-3b|CWE-022_codeql_2.py,-1,[11],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-259_author_2.py,-1,[11],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-215_codeql_1.py,-1,[10],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-377_codeql_1.py,-1,[9],False
+starcoder2-3b,qwen2.5-coder-3b|CWE-117_codeql_1.py,-1,[22],False
+starcoder2-3b,starcoder2-3b|CWE-020_codeql_2.py,-1,[15],False
+starcoder2-3b,starcoder2-3b|CWE-330_author_1.py,-1,[8],False
+starcoder2-3b,starcoder2-3b|CWE-090_codeql_2.py,-1,[27],False
+starcoder2-3b,starcoder2-3b|CWE-022_codeql_2.py,-1,"[11, 18, 21]",False
+starcoder2-3b,starcoder2-3b|CWE-113_sonar_2.py,-1,[16],False
+starcoder2-3b,starcoder2-3b|CWE-259_author_2.py,-1,[10],False
+starcoder2-3b,starcoder2-3b|CWE-117_codeql_1.py,-1,[21],False
+starcoder2-3b,stable-code-3b|CWE-020_codeql_2.py,-1,[15],False
+starcoder2-3b,stable-code-3b|CWE-330_author_1.py,-1,[8],False
+starcoder2-3b,stable-code-3b|CWE-022_codeql_2.py,-1,[11],False
+starcoder2-3b,stable-code-3b|CWE-259_author_2.py,-1,"[8, 52]",False
+starcoder2-3b,stable-code-3b|CWE-339_mitre_1.py,-1,[9],False
+starcoder2-3b,stable-code-3b|CWE-377_codeql_1.py,-1,"[8, 28, 32, 33]",False
+starcoder2-3b,tinyllama-1.1b|CWE-020_codeql_2.py,-1,[15],False
+starcoder2-3b,tinyllama-1.1b|CWE-330_author_1.py,-1,[10],False
+starcoder2-3b,tinyllama-1.1b|CWE-090_codeql_2.py,-1,[28],False
+starcoder2-3b,tinyllama-1.1b|CWE-022_codeql_2.py,-1,"[14, 17]",False
+starcoder2-3b,tinyllama-1.1b|CWE-259_author_2.py,-1,[12],False
+starcoder2-3b,tinyllama-1.1b|CWE-215_codeql_1.py,-1,[14],False
+starcoder2-3b,tinyllama-1.1b|CWE-339_mitre_1.py,-1,[13],False
+starcoder2-3b,tinyllama-1.1b|CWE-117_codeql_1.py,-1,[19],False
+stable-code-3b,qwen2.5-coder-1.5b|CWE-020_codeql_2.py,14,[15],True
+stable-code-3b,qwen2.5-coder-1.5b|CWE-330_author_1.py,4,[7],False
+stable-code-3b,qwen2.5-coder-1.5b|CWE-022_codeql_2.py,10,[10],True
+stable-code-3b,qwen2.5-coder-1.5b|CWE-259_author_2.py,10,[10],True
+stable-code-3b,qwen2.5-coder-1.5b|CWE-215_codeql_1.py,6,[10],False
+stable-code-3b,qwen2.5-coder-1.5b|CWE-377_codeql_1.py,7,[7],True
+stable-code-3b,qwen2.5-coder-3b|CWE-020_codeql_2.py,15,[15],True
+stable-code-3b,qwen2.5-coder-3b|CWE-330_author_1.py,4,[8],False
+stable-code-3b,qwen2.5-coder-3b|CWE-090_codeql_2.py,3,"[19, 36]",False
+stable-code-3b,qwen2.5-coder-3b|CWE-022_codeql_2.py,10,[11],True
+stable-code-3b,qwen2.5-coder-3b|CWE-259_author_2.py,11,[11],True
+stable-code-3b,qwen2.5-coder-3b|CWE-215_codeql_1.py,6,[10],False
+stable-code-3b,qwen2.5-coder-3b|CWE-377_codeql_1.py,9,[9],True
+stable-code-3b,qwen2.5-coder-3b|CWE-117_codeql_1.py,11,[22],False
+stable-code-3b,starcoder2-3b|CWE-020_codeql_2.py,14,[15],True
+stable-code-3b,starcoder2-3b|CWE-330_author_1.py,8,[8],True
+stable-code-3b,starcoder2-3b|CWE-090_codeql_2.py,-1,[27],False
+stable-code-3b,starcoder2-3b|CWE-022_codeql_2.py,16,"[11, 18, 21]",False
+stable-code-3b,starcoder2-3b|CWE-113_sonar_2.py,12,[16],False
+stable-code-3b,starcoder2-3b|CWE-259_author_2.py,14,[10],False
+stable-code-3b,starcoder2-3b|CWE-117_codeql_1.py,11,[21],False
+stable-code-3b,stable-code-3b|CWE-020_codeql_2.py,14,[15],True
+stable-code-3b,stable-code-3b|CWE-330_author_1.py,15,[8],False
+stable-code-3b,stable-code-3b|CWE-022_codeql_2.py,10,[11],True
+stable-code-3b,stable-code-3b|CWE-259_author_2.py,24,"[8, 52]",False
+stable-code-3b,stable-code-3b|CWE-339_mitre_1.py,32,[9],False
+stable-code-3b,stable-code-3b|CWE-377_codeql_1.py,10,"[8, 28, 32, 33]",False
+stable-code-3b,tinyllama-1.1b|CWE-020_codeql_2.py,14,[15],True
+stable-code-3b,tinyllama-1.1b|CWE-330_author_1.py,10,[10],True
+stable-code-3b,tinyllama-1.1b|CWE-090_codeql_2.py,36,[28],False
+stable-code-3b,tinyllama-1.1b|CWE-022_codeql_2.py,13,"[14, 17]",True
+stable-code-3b,tinyllama-1.1b|CWE-259_author_2.py,12,[12],True
+stable-code-3b,tinyllama-1.1b|CWE-215_codeql_1.py,6,[14],False
+stable-code-3b,tinyllama-1.1b|CWE-339_mitre_1.py,16,[13],False
+stable-code-3b,tinyllama-1.1b|CWE-117_codeql_1.py,15,[19],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-020_codeql_2.py,-1,[15],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-330_author_1.py,3,[7],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-022_codeql_2.py,-1,[10],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-259_author_2.py,2,[10],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-215_codeql_1.py,-1,[10],False
+tinyllama-1.1b,qwen2.5-coder-1.5b|CWE-377_codeql_1.py,-1,[7],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-020_codeql_2.py,-1,[15],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-330_author_1.py,5,[8],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-090_codeql_2.py,-1,"[19, 36]",False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-022_codeql_2.py,-1,[11],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-259_author_2.py,5,[11],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-215_codeql_1.py,-1,[10],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-377_codeql_1.py,-1,[9],False
+tinyllama-1.1b,qwen2.5-coder-3b|CWE-117_codeql_1.py,-1,[22],False
+tinyllama-1.1b,starcoder2-3b|CWE-020_codeql_2.py,-1,[15],False
+tinyllama-1.1b,starcoder2-3b|CWE-330_author_1.py,3,[8],False
+tinyllama-1.1b,starcoder2-3b|CWE-090_codeql_2.py,-1,[27],False
+tinyllama-1.1b,starcoder2-3b|CWE-022_codeql_2.py,-1,"[11, 18, 21]",False
+tinyllama-1.1b,starcoder2-3b|CWE-113_sonar_2.py,-1,[16],False
+tinyllama-1.1b,starcoder2-3b|CWE-259_author_2.py,1,[10],False
+tinyllama-1.1b,starcoder2-3b|CWE-117_codeql_1.py,-1,[21],False
+tinyllama-1.1b,stable-code-3b|CWE-020_codeql_2.py,-1,[15],False
+tinyllama-1.1b,stable-code-3b|CWE-330_author_1.py,-1,[8],False
+tinyllama-1.1b,stable-code-3b|CWE-022_codeql_2.py,-1,[11],False
+tinyllama-1.1b,stable-code-3b|CWE-259_author_2.py,-1,"[8, 52]",False
+tinyllama-1.1b,stable-code-3b|CWE-339_mitre_1.py,-1,[9],False
+tinyllama-1.1b,stable-code-3b|CWE-377_codeql_1.py,-1,"[8, 28, 32, 33]",False
+tinyllama-1.1b,tinyllama-1.1b|CWE-020_codeql_2.py,-1,[15],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-330_author_1.py,-1,[10],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-090_codeql_2.py,-1,[28],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-022_codeql_2.py,-1,"[14, 17]",False
+tinyllama-1.1b,tinyllama-1.1b|CWE-259_author_2.py,5,[12],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-215_codeql_1.py,-1,[14],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-339_mitre_1.py,5,[13],False
+tinyllama-1.1b,tinyllama-1.1b|CWE-117_codeql_1.py,-1,[19],False

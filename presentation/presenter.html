@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLM·Sec — Mode présentateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tableau de bord privé — mêmes jetons que la présentation */
+:root{
+  --paper:#f2f2ee; --paper2:#f7f7f3; --white:#fcfcfa; --panel:#e4e6ee; --line:#dcdcd5; --line2:#c8c8c0;
+  --ink:#0e0f12; --ink2:#4a4d55; --muted:#868a93; --blue:#042df5; --blue-soft:#e8ecfe;
+  --ok:#1a7f37; --ok-soft:#e6f4ea; --warn:#b45309; --warn-soft:#fdf0dc; --over:#c4271b; --over-soft:#fbe7e5;
+  --display:"PX Grotesk","Space Grotesk",system-ui,sans-serif; --sans:"Atlas Grotesk","Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow:hidden}
+body{display:grid;grid-template-rows:auto auto 1fr auto;grid-template-columns:minmax(0,1fr);gap:12px;padding:14px 18px}
+.caps{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.mono{font-family:var(--mono)}
+button{font-family:var(--mono);font-size:13px;height:34px;padding:0 12px;border-radius:7px;border:1px solid var(--line2);background:var(--white);color:var(--ink);cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--blue);color:var(--blue)}
+button.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+button.big{height:46px;padding:0 22px;font-size:15px}
+
+/* Barre du haut */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:10px 12px 10px 16px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.logo small{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.logo .rep{display:none;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#fff;background:var(--ink);padding:3px 8px;border-radius:4px}
+body.rehearsal .logo .rep{display:inline}
+.who{display:flex;align-items:center;gap:11px;white-space:nowrap}
+.who .n{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:var(--blue);color:#fff;font-family:var(--mono);font-size:13px}
+.who b{font-family:var(--display);font-size:19px;letter-spacing:-.02em;font-weight:600;display:block}
+.clocks{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end;min-width:0}
+.clk{text-align:right;white-space:nowrap}
+.clk .v{font-family:var(--mono);font-size:20px;font-weight:500;letter-spacing:-.02em;line-height:1.15}
+@media (max-width:1500px){ .clk.opt{display:none} .logo small{display:none} .who b{font-size:17px} }
+.pill{display:inline-block;padding:2px 9px;border-radius:6px;border:1px solid transparent}
+.pill.ok{color:var(--ok);background:var(--ok-soft);border-color:rgba(26,127,55,.3)}
+.pill.warn{color:var(--warn);background:var(--warn-soft);border-color:rgba(180,83,9,.35)}
+.pill.over{color:var(--over);background:var(--over-soft);border-color:rgba(196,39,27,.35)}
+.pill.idle{color:var(--muted);background:var(--paper2);border-color:var(--line)}
+.status{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--over)}
+.status.ok i{background:var(--ok)}
+.btns{display:flex;gap:6px}
+
+/* Alertes */
+.alerts{display:flex;flex-direction:column;gap:8px}
+.alert{display:none;align-items:center;justify-content:space-between;gap:16px;border-radius:10px;padding:9px 14px;font-size:14.5px;color:var(--ink2);border:1px solid}
+.alert.on{display:flex}
+.alert b{color:var(--ink)}
+.alert.pub{background:#fdf7ea;border-color:#e8c88a}
+.alert.warn{background:var(--warn-soft);border-color:rgba(180,83,9,.4);color:var(--warn);font-weight:500}
+.alert.over{background:var(--over-soft);border-color:rgba(196,39,27,.4);color:var(--over);font-weight:500}
+
+/* Zone principale */
+.main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;min-height:0}
+.col{display:flex;flex-direction:column;gap:10px;min-height:0}
+.frame{position:relative;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:#d9d9d2;aspect-ratio:16/9;width:100%}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.frame .end{position:absolute;inset:0;display:none;place-items:center;background:var(--paper2);font-family:var(--display);font-size:22px;color:var(--muted)}
+.frame .end.on{display:grid}
+.lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.lab b{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.lab .caps{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cur-wrap{flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center}
+.cur-wrap .frame{max-height:100%;width:auto;height:100%;max-width:100%}
+/* Aperçu « suivante » volontairement réduit : la place va au script à lire */
+.frame.next{flex:none;width:auto;height:clamp(110px,24vh,240px);align-self:flex-start;max-width:100%}
+@media (max-height:760px){ .frame.next{display:none} .top{padding:6px 10px} .clk .v{font-size:17px} }
+.notes{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.notes .hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line)}
+.notes .hd b{font-family:var(--display);font-size:15px;font-weight:600}
+.notes textarea{flex:1;min-height:0;border:0;resize:none;padding:12px 16px;font-family:var(--sans);font-size:var(--nfs,20px);line-height:1.55;color:var(--ink);background:transparent;outline:none}
+.notes .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 12px;border-top:1px solid var(--line)}
+.saved{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* Barre du bas */
+.bottom{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px}
+.prog{display:flex;flex-direction:column;gap:7px;min-width:0}
+.segs{display:flex;gap:2px;height:12px}
+.segs span{flex:1;border-radius:2px;cursor:pointer}
+.segs span.p0{background:#c9cde3}.segs span.p1{background:#d8d3e6}.segs span.p2{background:#cfe0d6}.segs span.p3{background:#e6dccb}.segs span.q{background:#e2e2dc}
+.segs span.done{filter:brightness(.8)}
+.segs span.cur{background:var(--blue)!important;filter:none}
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tm{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:var(--white);font-family:var(--mono);font-size:11.5px;color:var(--ink2);white-space:nowrap;min-width:0}
+.tm > span:first-child{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tm .pill{flex:none}
+.tm.on{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-soft)}
+.tm i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+
+/* Bilan de répétition */
+#report{position:fixed;inset:0;z-index:50;display:none;place-items:center;background:rgba(242,242,238,.85)}
+#report.on{display:grid}
+#report .box{background:var(--white);border:1px solid var(--line2);border-radius:12px;padding:24px 28px;width:min(960px,94vw);max-height:90vh;overflow:auto;box-shadow:0 20px 50px -20px rgba(20,22,30,.4)}
+#report h3{font-family:var(--display);font-size:26px;letter-spacing:-.02em;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:14px}
+th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:8px;border-bottom:1px solid var(--ink)}
+td{padding:8px;border-bottom:1px solid var(--line);color:var(--ink2)}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="logo"><svg width="22" height="22" viewBox="0 0 26 26"><path d="M13 2 23 6v7c0 6-4.2 10-10 11.5C7.2 23 3 19 3 13V6z" fill="none" stroke="#0e0f12" stroke-width="2"/><path d="M10 10l-3 3 3 3M16 10l3 3-3 3" fill="none" stroke="#042df5" stroke-width="2" stroke-linecap="square"/></svg>SLM·Sec<small>privé</small><span class="rep">RÉPÉTITION</span></div>
+  <div class="who"><span class="n" id="who-n">01</span><div><span class="caps" id="who-part">Intervenant·e</span><b id="who-name">—</b></div></div>
+  <div class="clocks">
+    <div class="clk"><div class="caps">Reste · intervenant·e</div><div class="v"><span class="pill idle" id="t-pres">05:00</span></div></div>
+    <div class="clk"><div class="caps">Reste · soutenance</div><div class="v"><span class="pill idle" id="t-total">20:00</span></div></div>
+    <div class="clk"><div class="caps">Écoulé</div><div class="v" id="t-elapsed">00:00</div></div>
+    <div class="clk"><div class="caps">Slide · cible</div><div class="v" id="t-slide">00:00</div></div>
+    <div class="clk"><div class="caps">N°</div><div class="v" id="slide-no">01/31</div></div>
+    <div class="clk opt"><div class="caps">Heure</div><div class="v" id="t-clock">--:--</div></div>
+    <div class="btns"><button class="blue" id="b-timer">démarrer</button><button id="b-reset" title="Remettre les chronomètres à zéro">↺</button><button id="b-report" title="Bilan des temps">bilan</button></div>
+  </div>
+</div>
+
+<div class="alerts">
+  <div class="alert warn" id="warn"></div>
+  <div class="alert pub" id="alert">
+    <span id="alert-txt"><b>La fenêtre publique n'est pas ouverte.</b> Votre navigateur a peut-être bloqué la fenêtre pop-up.</span>
+    <span style="display:flex;gap:8px"><button class="blue" id="b-open">Ouvrir la fenêtre publique</button><button id="b-screen" title="Demande l'autorisation « gestion des fenêtres » puis ouvre la fenêtre publique sur l'autre écran">Placer sur le 2ᵉ écran</button></span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="col">
+    <div class="lab"><b>Slide actuelle</b><span class="status" id="status"><i></i><span>fenêtre publique déconnectée</span></span></div>
+    <div class="cur-wrap"><div class="frame" id="f-cur"><iframe id="if-cur" title="Slide actuelle" tabindex="-1"></iframe></div></div>
+  </div>
+  <div class="col">
+    <div class="lab"><b>Slide suivante</b><span class="caps" id="next-who"></span></div>
+    <div class="frame next"><iframe id="if-next" title="Slide suivante" tabindex="-1"></iframe><div class="end" id="end">Fin de la présentation</div></div>
+    <div class="notes">
+      <div class="hd"><b id="notes-title">Script</b><span style="display:flex;gap:6px"><button id="b-small" title="Texte plus petit">A−</button><button id="b-large" title="Texte plus grand">A+</button></span></div>
+      <textarea id="notes" spellcheck="false" placeholder="Votre script pour cette slide…"></textarea>
+      <div class="ft"><span class="saved" id="saved">script modifiable · enregistré sur cet ordinateur</span><button id="b-restore" title="Revenir au script de notes.js">script d'origine</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom">
+  <button class="big" id="b-prev">← précédente</button>
+  <div class="prog"><div class="segs" id="segs"></div><div class="team" id="team"></div></div>
+  <button class="big blue" id="b-next">suivante →</button>
+</div>
+
+<div id="report"><div class="box" id="report-box"></div></div>
+
+<script src="notes.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const ID = Math.random().toString(36).slice(2);
+const Q = new URLSearchParams(location.search);
+const REHEARSAL = Q.has("repetition");
+if (REHEARSAL) document.body.classList.add("rehearsal");
+const DEF = Object.assign({ totalMinutes: 20, warnSeconds: 60, wordsPerMinute: 110 }, window.DEFENSE || {});
+const PROFILES = window.PROFILES || [];
+const SCRIPT = window.SCRIPT || [];
+let N = SCRIPT.length || 31, META = [], TEAM = PROFILES.map(p => p.name);
+let cur = Math.max(0, (parseInt(location.hash.slice(1)) || 1) - 1);
+let pubWin = null, lastPing = 0, typed = "";
+
+/* ---------------- Synchronisation (BroadcastChannel + messages directs) ---------------- */
+let channel = null;
+try { channel = new BroadcastChannel("slmsec-presenter"); } catch (e) { channel = null; }
+function send(msg) {
+  const m = Object.assign({ app: "slmsec", from: ID, t: Date.now() }, msg);
+  if (channel) { try { channel.postMessage(m); } catch (e) {} }
+  if (pubWin && !pubWin.closed) { try { pubWin.postMessage(m, "*"); } catch (e) {} }
+}
+function receive(m, src) {
+  if (!m || m.app !== "slmsec" || m.from === ID) return;
+  if (m.type === "meta") { init(m); return; }
+  if (m.type === "hello-pub" || m.type === "ping") {
+    if (src && src !== $("#if-cur").contentWindow && src !== $("#if-next").contentWindow) pubWin = src;
+    const first = Date.now() - lastPing > 5000;
+    lastPing = Date.now(); status();
+    if (first || m.n !== cur) send({ type: "nav", n: cur });
+  }
+  if (m.type === "nav" && m.n !== cur) show(m.n, false);
+}
+if (channel) channel.onmessage = e => receive(e.data);
+addEventListener("message", e => receive(e.data, e.source));
+
+/* ---------------- Aperçus ---------------- */
+$("#if-cur").src = `index.html?mode=preview#${cur + 1}`;
+$("#if-next").src = `index.html?mode=preview#${Math.min(cur + 2, N)}`;
+$("#if-next").onload = () => post($("#if-next"), Math.min(cur + 1, N - 1));
+function post(ifr, n) { try { ifr.contentWindow.postMessage({ app: "slmsec", from: ID, type: "goto", n }, "*"); } catch (e) {} }
+
+/* ---------------- Script oral (notes.js) + modifications locales ---------------- */
+const KEY = "slmsec-script-v5";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { store = {}; }
+const html2text = h => { const d = document.createElement("div"); d.innerHTML = (h || "").replace(/<br\s*\/?>/gi, "\n"); return d.textContent.trim(); };
+const original = i => SCRIPT[i] ? SCRIPT[i].text : (META[i] ? html2text(META[i].notes) : "");
+const textOf = i => store[i] !== undefined ? store[i] : original(i);
+const presOf = i => SCRIPT[i] ? SCRIPT[i].p : (META[i] ? META[i].p : 0);
+const untimed = i => !!(SCRIPT[i] && SCRIPT[i].untimed);
+const words = t => t.replace(/\[[^\]]*\]/g, " ").split(/\s+/).filter(Boolean).length;          // les [indications] ne se disent pas
+const targetMs = i => untimed(i) ? 0 : Math.round(words(textOf(i)) / DEF.wordsPerMinute * 60000);
+function saveNote() {
+  const v = $("#notes").value;
+  if (v === original(cur)) delete store[cur]; else store[cur] = v;
+  try { localStorage.setItem(KEY, JSON.stringify(store)); $("#saved").textContent = "enregistré · " + new Date().toLocaleTimeString("fr-FR"); }
+  catch (e) { $("#saved").textContent = "stockage indisponible : modifications gardées jusqu'à la fermeture"; }
+  renderTeam();
+}
+$("#notes").addEventListener("input", saveNote);
+$("#b-restore").onclick = () => { $("#notes").value = original(cur); saveNote(); };
+let nfs = 20;
+try { nfs = +(localStorage.getItem("slmsec-notes-size") || 20); } catch (e) {}
+const setFs = () => { document.documentElement.style.setProperty("--nfs", nfs + "px"); try { localStorage.setItem("slmsec-notes-size", nfs); } catch (e) {} };
+$("#b-small").onclick = () => { nfs = Math.max(13, nfs - 2); setFs(); };
+$("#b-large").onclick = () => { nfs = Math.min(36, nfs + 2); setFs(); };
+setFs();
+
+/* ---------------- Chronomètres : 20 min au total, 5 min par intervenant·e ---------------- */
+const TOTAL = DEF.totalMinutes * 60000, WARN = DEF.warnSeconds * 1000;
+const slotMs = p => ((PROFILES[p] && PROFILES[p].minutes) || DEF.totalMinutes / 4) * 60000;
+let running = false, last = 0, total = 0, spent = [0, 0, 0, 0], slideSpent = new Array(N).fill(0), slideT = 0;
+const fmt = ms => { const neg = ms < 0, s = Math.floor(Math.abs(ms) / 1000); return (neg ? "+" : "") + String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+const level = rest => rest < 0 ? "over" : rest <= WARN ? "warn" : "ok";
+function setTimer(on) {
+  running = on; last = Date.now();
+  $("#b-timer").textContent = running ? "pause" : (total ? "reprendre" : "démarrer");
+  $("#b-timer").classList.toggle("blue", !running);
+}
+$("#b-timer").onclick = () => setTimer(!running);
+$("#b-reset").onclick = () => { if (total && !confirm("Remettre tous les chronomètres à zéro ?")) return; total = 0; spent = [0, 0, 0, 0]; slideSpent = new Array(N).fill(0); slideT = 0; setTimer(false); tick(); };
+function tick() {
+  const now = Date.now();
+  if (running && !untimed(cur)) {           // la slide de questions est hors chronomètre
+    const dt = now - last; total += dt; spent[presOf(cur)] += dt; slideSpent[cur] += dt; slideT += dt;
+  }
+  last = now;
+  const p = presOf(cur), restP = slotMs(p) - spent[p], restT = TOTAL - total;
+  const lp = running || spent[p] ? level(restP) : "idle", lt = running || total ? level(restT) : "idle";
+  $("#t-pres").textContent = fmt(restP); $("#t-pres").className = "pill " + (untimed(cur) ? "idle" : lp);
+  $("#t-total").textContent = fmt(restT); $("#t-total").className = "pill " + lt;
+  $("#t-elapsed").textContent = fmt(total);
+  $("#t-slide").textContent = untimed(cur) ? "questions" : `${fmt(slideT)} · ${fmt(targetMs(cur))}`;
+  $("#t-clock").textContent = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  /* Alerte visible uniquement ici, jamais sur le vidéoprojecteur */
+  const w = $("#warn"), name = TEAM[p];
+  if (untimed(cur)) { w.className = "alert warn"; }
+  else if (restT < 0) { w.className = "alert over on"; w.textContent = `⛔ Soutenance dépassée de ${fmt(-restT).replace("+", "")} — concluez maintenant.`; }
+  else if (restP < 0) { w.className = "alert over on"; w.textContent = `⛔ ${name} : temps dépassé de ${fmt(-restP).replace("+", "")} — passez la parole.`; }
+  else if (restP <= WARN && (running || spent[p])) { w.className = "alert warn on"; w.textContent = `⚠ ${name} : moins d'une minute restante (${fmt(restP)}).`; }
+  else w.className = "alert warn";
+  renderTeam(); status();
+}
+setInterval(tick, 250);
+
+/* ---------------- Fenêtre publique / répétition ---------------- */
+const startedAt = Date.now();
+function status() {
+  const s = $("#status");
+  if (REHEARSAL) { s.classList.add("ok"); s.querySelector("span").textContent = "répétition · sans vidéoprojecteur"; $("#alert").classList.remove("on"); return; }
+  const ok = Date.now() - lastPing < 5000 && (!pubWin || !pubWin.closed);
+  s.classList.toggle("ok", ok);
+  s.querySelector("span").textContent = ok ? "fenêtre publique synchronisée" : "fenêtre publique déconnectée";
+  if (!ok && Date.now() - startedAt > 4000) $("#alert").classList.add("on");
+  if (ok) $("#alert").classList.remove("on");
+}
+
+/* ---------------- Affichage ---------------- */
+const COLORS = ["#c9cde3", "#d8d3e6", "#cfe0d6", "#e6dccb"];
+const PARTS = ["Contexte", "Méthodologie", "Implémentation", "Résultats", "Conclusion"];
+function slidesOf(p) { const a = []; for (let i = 0; i < N; i++) if (presOf(i) === p && !untimed(i)) a.push(i); return a; }
+function renderTeam() {
+  $("#team").innerHTML = PROFILES.map((pr, p) => {
+    const sl = slidesOf(p), plan = sl.reduce((s, i) => s + targetMs(i), 0), rest = slotMs(p) - spent[p];
+    const cls = spent[p] ? level(rest) : "idle";
+    return `<div class="tm ${presOf(cur) === p ? "on" : ""}" title="${pr.section} · script ≈ ${fmt(plan)}"><span><i style="background:${COLORS[p]}"></i>0${p + 1} · ${pr.name} · ${sl[0] + 1}–${sl[sl.length - 1] + 1}</span><span class="pill ${cls}">${fmt(spent[p])}/${fmt(slotMs(p))}</span></div>`;
+  }).join("");
+}
+function init(m) {
+  if (META.length) return;
+  META = m.slides; N = m.N; if (!TEAM.length) TEAM = m.team;
+  if (slideSpent.length !== N) slideSpent = new Array(N).fill(0);
+  /* Contrôle : chaque slide a un script et le bon intervenant·e */
+  const bad = META.filter((s, i) => !SCRIPT[i] || SCRIPT[i].p !== s.p).map(s => s.i + 1);
+  if (bad.length) console.warn("Script absent ou intervenant·e différent pour les slides :", bad.join(", "));
+  $("#segs").innerHTML = META.map((s, i) => `<span class="${untimed(i) ? "q" : "p" + presOf(i)}" title="Slide ${i + 1} · ${TEAM[presOf(i)]}" data-i="${i}"></span>`).join("");
+  $("#segs").onclick = e => { const i = e.target.dataset.i; if (i !== undefined) show(+i, true); };
+  show(cur, true, true);
+}
+function show(n, broadcast, force) {
+  n = Math.max(0, Math.min(N - 1, n));
+  if (n === cur && !force) return;
+  if (n !== cur) slideT = 0;
+  if (!running && !force && total === 0 && !untimed(n)) setTimer(true);     // démarrage à la première navigation
+  cur = n;
+  history.replaceState(null, "", location.pathname + location.search + "#" + (n + 1));
+  post($("#if-cur"), n);
+  if (n + 1 < N) { post($("#if-next"), n + 1); $("#end").classList.remove("on"); } else $("#end").classList.add("on");
+  $("#slide-no").textContent = String(n + 1).padStart(2, "0") + "/" + N;
+  const p = presOf(n), s = META[n];
+  $("#who-n").textContent = "0" + (p + 1);
+  $("#who-name").textContent = TEAM[p] || "—";
+  $("#who-part").textContent = `0${p + 1} · ${PROFILES[p] ? PROFILES[p].section : ""}${s ? " · " + PARTS[s.sec] : ""}`;
+  $("#notes-title").textContent = `Script · slide ${n + 1} · ${TEAM[p]}`;
+  $("#notes").value = textOf(n);
+  const nx = n + 1 < N ? presOf(n + 1) : null;
+  const nt = META[n + 1] ? META[n + 1].title.slice(0, 48) : "fin";
+  $("#next-who").textContent = (nx !== null && nx !== p ? `→ passage à ${TEAM[nx]} · ` : "") + nt;
+  [...$("#segs").children].forEach((el, i) => { el.classList.toggle("cur", i === n); el.classList.toggle("done", i < n); });
+  $("#saved").textContent = "script modifiable · enregistré sur cet ordinateur";
+  tick();
+  if (broadcast) send({ type: "nav", n });
+}
+
+/* ---------------- Bilan (répétition) ---------------- */
+function report() {
+  const rows = PROFILES.map((pr, p) => {
+    const sl = slidesOf(p), plan = sl.reduce((s, i) => s + targetMs(i), 0), rest = slotMs(p) - spent[p];
+    return `<tr><td>0${p + 1} · <b>${pr.name}</b><br><span class="caps">${pr.section} · slides ${sl[0] + 1}–${sl[sl.length - 1] + 1}</span></td><td class="n">${fmt(plan)}</td><td class="n">${fmt(spent[p])}</td><td class="n">${fmt(slotMs(p))}</td><td class="n"><span class="pill ${spent[p] ? level(rest) : "idle"}">${spent[p] ? (rest < 0 ? "dépassé " + fmt(-rest).replace("+", "") : "reste " + fmt(rest)) : "—"}</span></td></tr>`;
+  }).join("");
+  const planTot = PROFILES.reduce((s, _, p) => s + slidesOf(p).reduce((a, i) => a + targetMs(i), 0), 0);
+  const per = [...Array(N).keys()].filter(i => !untimed(i)).map(i => `<tr><td class="n">${i + 1}</td><td>${TEAM[presOf(i)]}</td><td class="n">${words(textOf(i))}</td><td class="n">${fmt(targetMs(i))}</td><td class="n">${slideSpent[i] ? fmt(slideSpent[i]) : "—"}</td></tr>`).join("");
+  $("#report-box").innerHTML = `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px"><div><h3>Bilan de la répétition</h3>
+    <p class="caps">script estimé à ${DEF.wordsPerMinute} mots/min · limite ${DEF.totalMinutes}:00</p></div><button id="b-close">fermer</button></div>
+    <table><thead><tr><th>Intervenant·e</th><th class="n">Script estimé</th><th class="n">Temps réel</th><th class="n">Alloué</th><th class="n">État</th></tr></thead><tbody>${rows}
+    <tr><td><b>Total</b></td><td class="n"><b>${fmt(planTot)}</b></td><td class="n"><b>${fmt(total)}</b></td><td class="n">${fmt(TOTAL)}</td><td class="n"><span class="pill ${total ? level(TOTAL - total) : "idle"}">${total ? (total <= TOTAL ? "tient dans les 20 min" : "trop long") : "—"}</span></td></tr></tbody></table>
+    <table><thead><tr><th class="n">Slide</th><th>Intervenant·e</th><th class="n">Mots</th><th class="n">Cible</th><th class="n">Réel</th></tr></thead><tbody>${per}</tbody></table>`;
+  $("#report").classList.add("on");
+  $("#b-close").onclick = () => $("#report").classList.remove("on");
+}
+$("#b-report").onclick = report;
+$("#report").onclick = e => { if (e.target.id === "report") $("#report").classList.remove("on"); };
+
+/* ---------------- Commandes ---------------- */
+$("#b-next").onclick = () => show(cur + 1, true);
+$("#b-prev").onclick = () => show(cur - 1, true);
+addEventListener("keydown", e => {
+  const typing = document.activeElement === $("#notes");
+  if (e.key === "PageDown") { e.preventDefault(); show(cur + 1, true); return; }      // télécommande : toujours active
+  if (e.key === "PageUp") { e.preventDefault(); show(cur - 1, true); return; }
+  if (typing) { if (e.key === "Escape") $("#notes").blur(); return; }
+  if (e.key >= "0" && e.key <= "9") { typed += e.key; return; }
+  if (e.key === "Enter" && typed) { show(+typed - 1, true); typed = ""; return; }
+  typed = "";
+  if (["ArrowRight", "ArrowDown", " "].includes(e.key)) { e.preventDefault(); show(cur + 1, true); }
+  else if (["ArrowLeft", "ArrowUp", "Backspace"].includes(e.key)) { e.preventDefault(); show(cur - 1, true); }
+  else if (e.key === "Home") show(0, true);
+  else if (e.key === "End") show(N - 1, true);
+  else if (e.key.toLowerCase() === "t") setTimer(!running);
+  else if (e.key.toLowerCase() === "b") report();
+  else if (e.key === "Escape") $("#report").classList.remove("on");
+});
+
+/* ---------------- Ouverture manuelle de la fenêtre publique ---------------- */
+function openPublic(feat) {
+  const w = window.open(`index.html?mode=public#${cur + 1}`, "slmsec-public", feat || "popup=yes,width=1280,height=720");
+  if (w) { pubWin = w; $("#alert-txt").innerHTML = "<b>Fenêtre publique ouverte.</b> Déplacez-la sur le vidéoprojecteur puis cliquez dedans pour le plein écran."; }
+  else $("#alert-txt").innerHTML = "<b>Pop-up bloquée.</b> Autorisez les fenêtres pop-up pour ce fichier (icône dans la barre d'adresse), puis cliquez à nouveau.";
+}
+$("#b-open").onclick = () => openPublic();
+$("#b-screen").onclick = async () => {
+  if (!window.getScreenDetails) { $("#alert-txt").innerHTML = "<b>Placement automatique indisponible.</b> Glissez la fenêtre publique sur le vidéoprojecteur (Chrome ou Edge recommandés)."; return; }
+  try {
+    const sd = await window.getScreenDetails();
+    const ext = sd.screens.find(s => !s.isPrimary) || sd.screens.find(s => s !== sd.currentScreen);
+    if (!ext) { $("#alert-txt").innerHTML = "<b>Un seul écran détecté.</b> Branchez le vidéoprojecteur en mode « Étendre » (Windows + P)."; return; }
+    if (pubWin && !pubWin.closed) { try { pubWin.close(); } catch (e) {} }
+    openPublic(`popup=yes,left=${ext.availLeft},top=${ext.availTop},width=${ext.availWidth},height=${ext.availHeight}`);
+  } catch (e) { $("#alert-txt").innerHTML = "<b>Autorisation refusée.</b> Glissez la fenêtre publique sur le vidéoprojecteur à la main."; }
+};
+if (Q.get("blocked") && !REHEARSAL) $("#alert").classList.add("on");
+send({ type: "hello-dash" });
+setTimeout(() => send({ type: "hello-dash" }), 800);
+renderTeam(); tick();
+</script>
+</body>
+</html>

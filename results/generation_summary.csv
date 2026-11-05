@@ -1,0 +1,6 @@
+model,generated,extraction_ok_rate,extraction_fail_initial_rate,extraction_fail_final,mean_attempts,repetition_cut,latency_mean_s,tok_per_s,peak_vram_gb,load_vram_gb
+qwen2.5-coder-1.5b,15,1.0,0.0,0,1.0,0,3.8546,25.856,3.12,3.087
+qwen2.5-coder-3b,15,1.0,0.0,0,1.0,0,6.082400000000001,20.615333333333336,6.215,6.181
+stable-code-3b,15,0.9333333333333333,0.06666666666666665,1,1.1333333333333333,1,9.5032,21.140666666666668,5.803,5.6
+starcoder2-3b,15,1.0,0.0,0,1.0,0,9.7644,25.148000000000003,6.119,6.07
+tinyllama-1.1b,15,1.0,0.0,0,1.0,0,8.8706,34.6,2.244,2.21

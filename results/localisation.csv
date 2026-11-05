@@ -1,0 +1,6 @@
+model,n,precision_localisation
+qwen2.5-coder-1.5b,35,0.3142857142857143
+qwen2.5-coder-3b,35,0.3142857142857143
+stable-code-3b,35,0.45714285714285713
+starcoder2-3b,35,0.0
+tinyllama-1.1b,35,0.0
