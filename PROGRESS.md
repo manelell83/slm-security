@@ -1,6 +1,6 @@
 # PROGRESS
 
-_Mis à jour le 2026-10-30._
+_Mis à jour le 2026-11-10._
 
 ## Fait (code écrit et validé hors GPU)
 - [x] `slmsec.py` : config, VRAM (`loaded()` / `free_vram()`), extraction robuste, Bandit corrigé, détecteur
@@ -15,13 +15,14 @@ _Mis à jour le 2026-10-30._
 - [x] P1 `01_generation` — vérifier le taux `extraction_ok` (cible > 90 %) et l'absence de `###` dans Stable-Code.
 - [x] P2 `02_bandit`.
 - [x] P3 `03_detecteur_lora_rag` — vérifier au chargement le nombre de paires Python CyberNative et la répartition CWE.
-- [x] P4 `04_benchmark` — puis annotation humaine de `results/annotation_humaine.csv` par l'équipe.
+- [x] P4 `04_benchmark`.
+- [ ] Annotation humaine de `results/annotation_humaine.csv` (non faite : la vérité sur les codes générés reste la pseudo-vérité).
 - [x] P5 `05_correction` (2026-11-02) : 21 codes × 5 correcteurs ; garde-fous ajoutés sur Colab (AST identique,
       noms non définis via pyflakes, signatures stdlib) ; revue humaine : 5 corrections valides / 17 succès stricts / 105.
       Notebook 05 réécrit (2026-11-03) avec tous ces correctifs et la revue intégrée ; il réutilise les checkpoints.
 - [x] P6 `06_extras` (localisation, profils, FP/FN).
 - [x] `RAPPORT_FINAL.md` rédigé avec les chiffres réels (2026-11-03) ; tableaux auto dans `ANNEXE_RESULTATS_AUTO.md`.
-- [x] Présentation HTML `presentation/index.html` (31 slides, notes, 9 captures à fournir).
+- [x] Présentation HTML `presentation/index.html` (30 slides, notes, captures intégrées) et rapport LaTeX `rapport/` (PDF compilé).
 
 ## Points à surveiller au premier lancement
 - `stop_strings` dans `generate` nécessite transformers ≥ 4.39 (installé en `-U`).
