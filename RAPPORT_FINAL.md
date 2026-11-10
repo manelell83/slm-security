@@ -15,7 +15,7 @@ Nous évaluons cinq petits modèles de langage (SLMs, 1,1 à 3,1 milliards de pa
   modèle). Le plus « performant » fonctionnellement d'après l'article de référence (Qwen2.5-Coder-3B) est aussi le plus
   vulnérable (40 %).
 - En détection, les SLMs **de base sont inutilisables** (F1 ≈ 0 : ils répondent presque toujours « sûr »). Un
-  affinage **QLoRA de quelques minutes** sur 594 exemples les rend compétitifs : **F1 = 0,67 à 0,82** contre
+  affinage **QLoRA de quelques minutes** sur 594 exemples les rend compétitifs : **F1 = 0,67 à 0,81** contre
   **0,64 pour Bandit**, avec une différence significative (McNemar, p < 0,05) pour 4 modèles sur 5.
 - Le **RAG ajouté à l'inférence dégrade** 3 détecteurs sur 5 (il n'a pas été vu à l'entraînement).
 - En correction, les vérifications automatiques acceptent 17 corrections sur 105, mais la **revue humaine n'en
@@ -141,13 +141,13 @@ compte du contexte de sécurité.
 | Détecteur | base | base + RAG | **LoRA** | LoRA + RAG |
 |---|---|---|---|---|
 | Qwen2.5-Coder-1.5B | 0,00 | 0,00 | 0,67 | **0,77** |
-| Qwen2.5-Coder-3B | 0,04 | 0,10 | **0,82** | 0,69 |
+| Qwen2.5-Coder-3B | 0,04 | 0,10 | **0,81** | 0,69 |
 | StarCoder2-3B | 0,00 | 0,00 | **0,75** | 0,67 |
 | Stable-Code-3B | 0,10 | 0,00 | **0,78** | 0,49 |
 | TinyLlama-1.1B | 0,00 | 0,00 | **0,78** | 0,05 |
 | *Bandit* | | | *0,64* | |
 
-_Valeurs de F1. Meilleur détecteur : Qwen2.5-Coder-3B LoRA (F1 0,82 [IC 0,71–0,89], MCC 0,61, accuracy 80 %).
+_Valeurs de F1. Meilleur détecteur : Qwen2.5-Coder-3B LoRA (F1 0,81 [IC 0,71–0,89], MCC 0,61, accuracy 80 %).
 Bandit : F1 0,64 [0,51–0,74], MCC 0,19. Taux de JSON invalide : 0 % pour toutes les configurations._
 
 Observations :
@@ -278,7 +278,7 @@ numéro de ligne exploitable : l'échec vient du format de réponse plus que de 
 1. **Les SLMs génèrent du code vulnérable dans près d'un cas sur trois**, surtout par réflexe d'API (pickle, random,
    debug, mots de passe en dur). Être meilleur fonctionnellement ne rend pas plus sûr.
 2. **Un SLM brut n'est pas un détecteur** ; un **affinage QLoRA léger** (quelques minutes sur T4, < 600 exemples) le
-   rend **meilleur que Bandit** (F1 0,82 contre 0,64). C'est le résultat le plus encourageant de l'étude : un détecteur
+   rend **meilleur que Bandit** (F1 0,81 contre 0,64). C'est le résultat le plus encourageant de l'étude : un détecteur
    local, peu coûteux et explicable (CWE + explication).
 3. **Le RAG n'est pas un gain automatique** : sans entraînement adapté, il dégrade la détection.
 4. **La correction automatique reste peu fiable** : 4,8 % de corrections réellement valides, et des vérifications

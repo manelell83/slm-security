@@ -215,7 +215,7 @@ Nous vérifions ensuite, sur notre jeu de test, si la catégorie donnée est la 
 • Détecteur SLM : la CWE est écrite directement dans sa réponse JSON.
 • Vérification sur les 76 codes de test : parmi les failles bien détectées, on compare la CWE donnée à la CWE attendue. Celle-ci est déduite par mots-clés de la description CyberNative ; les cas « CWE-Other » sont exclus.
 • Bonne catégorie : Qwen-1.5B 100 %, Qwen-3B 88 %, Stable-Code 85 %, StarCoder2 79 %, TinyLlama 76 % ; Bandit 41 %.
-• F1 = note de 0 à 1 qui combine deux qualités : trouver les failles, et ne pas crier au loup. Modèles de base ≈ 0 ; Bandit 0,64 ; LoRA de 0,67 à 0,82.
+• F1 = note de 0 à 1 qui combine deux qualités : trouver les failles, et ne pas crier au loup. Modèles de base ≈ 0 ; Bandit 0,64 ; LoRA de 0,67 à 0,81.
 • Limite : la CWE attendue est approximative, et la comparaison est stricte (deux catégories proches comptent comme une erreur).]
 
 #### Slide 17 — Entraîné en quelques minutes. · ≈ 0:38
@@ -305,7 +305,7 @@ Prudence toutefois : avec 15 codes par modèle, un seul code de différence repr
 
 #### Slide 23 — La LoRA fait d'un SLM un détecteur. · ≈ 0:36
 
-Deuxième question, la détection. Les modèles de base répondent presque toujours « sûr » : leur score F1 est proche de zéro. Après affinage LoRA, il atteint 0,67 à 0,82, au-dessus de Bandit à 0,64, écart significatif pour quatre modèles sur cinq.
+Deuxième question, la détection. Les modèles de base répondent presque toujours « sûr » : leur score F1 est proche de zéro. Après affinage LoRA, il atteint 0,67 à 0,81, au-dessus de Bandit à 0,64, écart significatif pour quatre modèles sur cinq.
 
 Le meilleur est Qwen-3B avec LoRA. Le RAG, lui, n'améliore qu'un modèle et dégrade les autres, probablement parce qu'il n'était pas présent pendant l'entraînement.
 
